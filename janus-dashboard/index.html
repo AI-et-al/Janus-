@@ -661,7 +661,119 @@
             .phases-grid { grid-template-columns: 1fr; }
             .agents-grid { grid-template-columns: 1fr; }
         }
-    </style>
+    
+        /* To-Do List */
+        .todo-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .todo-toolbar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .todo-toolbar-left, .todo-toolbar-right {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .todo-btn {
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(232, 220, 200, 0.12);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.7rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .todo-btn:hover { transform: translateY(-1px); border-color: rgba(196, 163, 90, 0.25); }
+        .todo-btn.active { background: rgba(196, 163, 90, 0.15); color: var(--text-primary); border-color: rgba(196, 163, 90, 0.25); }
+
+        .todo-summary { color: var(--text-muted); font-size: 0.85rem; }
+
+        .todo-category {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(232, 220, 200, 0.08);
+            border-radius: 14px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .todo-category summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.9rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-weight: 600;
+        }
+
+        .todo-category summary::-webkit-details-marker { display: none; }
+
+        .todo-category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+        }
+
+        .todo-category-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .todo-category-count { color: var(--text-muted); font-weight: 500; font-size: 0.85rem; }
+
+        .todo-items { padding: 0.25rem 1rem 1rem 1rem; }
+
+        .todo-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.6rem 0;
+            border-top: 1px solid rgba(232, 220, 200, 0.06);
+        }
+
+        .todo-item:first-child { border-top: none; }
+        .todo-item.done .todo-title { text-decoration: line-through; color: var(--text-muted); }
+
+        .todo-checkbox { margin-top: 0.15rem; }
+
+        .todo-content { flex: 1; min-width: 0; }
+        .todo-title { font-size: 0.92rem; color: var(--text-primary); }
+
+        .todo-meta {
+            margin-top: 0.35rem;
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .todo-pill {
+            font-size: 0.72rem;
+            padding: 0.12rem 0.45rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(232, 220, 200, 0.10);
+            background: rgba(26, 30, 30, 0.55);
+            color: var(--text-secondary);
+        }
+
+        .todo-pill.priority { border-color: rgba(196, 163, 90, 0.25); color: var(--accent-gold); }
+        .todo-pill.tag { border-color: rgba(74, 123, 125, 0.25); color: var(--accent-teal); }
+        .todo-pill.ref { border-color: rgba(42, 61, 84, 0.35); color: var(--text-secondary); }
+</style>
 </head>
 <body>
     <div class="container">
@@ -675,7 +787,7 @@
             <p class="subtitle">Multi-Model AI Orchestration System</p>
             <!-- Animated Symposium banner -->
             <div class="mascot-container">
-                <img src="AI-et-al_Symposium.gif" alt="The Symposium - AI et al." class="mascot-image">
+                <img src="symposium-animated.gif" alt="The Symposium - AI et al." class="mascot-image">
             </div>
             <p class="last-updated" id="lastUpdated">Loading...</p>
             <div class="status-indicator connected" id="connectionStatus">
@@ -761,6 +873,23 @@
             <div class="next-actions" id="actionsList"></div>
         </section>
 
+        <section>
+            <h2>To-Do List</h2>
+            <div class="todo-section">
+                <div class="todo-toolbar">
+                    <div class="todo-toolbar-left">
+                        <button class="todo-btn" id="todoFilterOpen" onclick="setTodoFilter('open')">Open</button>
+                        <button class="todo-btn" id="todoFilterAll" onclick="setTodoFilter('all')">All</button>
+                        <button class="todo-btn" id="todoFilterDone" onclick="setTodoFilter('done')">Done</button>
+                    </div>
+                    <div class="todo-toolbar-right">
+                        <span class="todo-summary" id="todoSummary">Loading…</span>
+                        <button class="todo-btn" onclick="resetTodos()" title="Clear saved checkbox state">Reset</button>
+                    </div>
+                </div>
+                <div id="todoList"></div>
+            </div>
+        </section>
         <section>
             <h2>Research & Insights</h2>
             <div class="blog-posts" id="blogPosts"></div>
@@ -850,8 +979,144 @@
                     <span>${action}</span>
                 </div>
             `).join('');
+
+            renderTodoList(data.todoList);
         }
 
+
+        const DEFAULT_TODO_STORAGE_KEY = 'janus.todo.v1';
+        let todoFilter = 'open';
+        let latestTodoData = null;
+
+        function getTodoStorageKey() {
+            return (latestTodoData && latestTodoData.storageKey) ? latestTodoData.storageKey : DEFAULT_TODO_STORAGE_KEY;
+        }
+
+        function loadTodoState() {
+            try {
+                const raw = localStorage.getItem(getTodoStorageKey());
+                return raw ? JSON.parse(raw) : {};
+            } catch {
+                return {};
+            }
+        }
+
+        function saveTodoState(state) {
+            try {
+                localStorage.setItem(getTodoStorageKey(), JSON.stringify(state));
+            } catch {
+                // ignore
+            }
+        }
+
+        function setTodoFilter(filter) {
+            todoFilter = filter;
+            updateTodoFilterButtons();
+            renderTodoList(latestTodoData);
+        }
+
+        function updateTodoFilterButtons() {
+            const ids = ['todoFilterOpen', 'todoFilterAll', 'todoFilterDone'];
+            ids.forEach(id => document.getElementById(id)?.classList.remove('active'));
+            if (todoFilter === 'open') document.getElementById('todoFilterOpen')?.classList.add('active');
+            if (todoFilter === 'all') document.getElementById('todoFilterAll')?.classList.add('active');
+            if (todoFilter === 'done') document.getElementById('todoFilterDone')?.classList.add('active');
+        }
+
+        function resetTodos() {
+            try {
+                localStorage.removeItem(getTodoStorageKey());
+            } catch {
+                // ignore
+            }
+            renderTodoList(latestTodoData);
+        }
+
+        function renderTodoList(todoData) {
+            latestTodoData = todoData || latestTodoData;
+            const container = document.getElementById('todoList');
+            if (!container) return;
+
+            const data = latestTodoData;
+            if (!data || !Array.isArray(data.categories)) {
+                container.innerHTML = '<div class="no-agents">No to-do data found in progress.json</div>';
+                const summary = document.getElementById('todoSummary');
+                if (summary) summary.textContent = '';
+                return;
+            }
+
+            updateTodoFilterButtons();
+
+            const state = loadTodoState();
+            const allItems = data.categories.flatMap(c => c.items || []);
+            const isDone = (item) => (state[item.id] ?? item.defaultChecked ?? false) === true;
+
+            const totalCount = allItems.length;
+            const doneCount = allItems.filter(isDone).length;
+            const openCount = totalCount - doneCount;
+
+            const summary = document.getElementById('todoSummary');
+            if (summary) summary.textContent = `Open ${openCount} / ${totalCount} • ${doneCount} done`;
+
+            const shouldShow = (item) => {
+                if (todoFilter === 'all') return true;
+                if (todoFilter === 'done') return isDone(item);
+                return !isDone(item);
+            };
+
+            container.innerHTML = data.categories.map(category => {
+                const items = (category.items || []).filter(shouldShow);
+                const categoryAll = (category.items || []);
+                const categoryDone = categoryAll.filter(isDone).length;
+                const categoryTotal = categoryAll.length;
+                const countLabel = `${categoryDone}/${categoryTotal}`;
+                const openByDefault = categoryDone !== categoryTotal;
+
+                const itemsHtml = items.length
+                    ? items.map(item => {
+                        const checked = isDone(item);
+                        const pills = [];
+                        if (item.priority) pills.push(`<span class="todo-pill priority">${item.priority}</span>`);
+                        (item.tags || []).forEach(t => pills.push(`<span class="todo-pill tag">${t}</span>`));
+                        (item.refs || []).slice(0, 2).forEach(r => pills.push(`<span class="todo-pill ref">${r}</span>`));
+
+                        return `
+                            <div class="todo-item ${checked ? 'done' : ''}">
+                                <input class="todo-checkbox" type="checkbox" data-todo-id="${item.id}" ${checked ? 'checked' : ''} />
+                                <div class="todo-content">
+                                    <div class="todo-title">${item.title}</div>
+                                    ${pills.length ? `<div class="todo-meta">${pills.join('')}</div>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')
+                    : '<div class="no-agents" style="padding: 0.75rem 0;">No items in this view.</div>';
+
+                return `
+                    <details class="todo-category" ${openByDefault ? 'open' : ''}>
+                        <summary>
+                            <div class="todo-category-header">
+                                <span class="todo-category-title">${category.name}</span>
+                            </div>
+                            <span class="todo-category-count">${countLabel}</span>
+                        </summary>
+                        <div class="todo-items">${itemsHtml}</div>
+                    </details>
+                `;
+            }).join('');
+
+            container.querySelectorAll('input[data-todo-id]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = e.target.getAttribute('data-todo-id');
+                    const next = e.target.checked;
+                    const nextState = loadTodoState();
+                    if (next) nextState[id] = true;
+                    else delete nextState[id];
+                    saveTodoState(nextState);
+                    renderTodoList(latestTodoData);
+                });
+            });
+        }
         async function loadBlogPosts() {
             try {
                 const response = await fetch('blog-posts.json');
@@ -1363,3 +1628,4 @@
     </script>
 </body>
 </html>
+

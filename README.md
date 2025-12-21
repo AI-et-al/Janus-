@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="AI-et-al_Symposium.gif" width="600" alt="The Symposium - AI et al.">
+  <img src="symposium-animated.gif" width="600" alt="The Symposium - AI et al.">
 </p>
 
 <p align="center">
