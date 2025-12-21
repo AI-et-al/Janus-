@@ -1,32 +1,31 @@
 <p align="center">
-  <img src="AI-et-al_Symposium.gif" alt="AI et al. - The Symposium" width="600">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="AI-et-al_Symposium.gif">
+    <source media="(prefers-color-scheme: light)" srcset="AI-et-al_Symposium.gif">
+    <img alt="Janus - Multi-Model AI Orchestration" src="AI-et-al_Symposium.gif" width="600">
+  </picture>
 </p>
 
-<h1 align="center">Janus~</h1>
-
-<h3 align="center">
-  Multi-Model AI Orchestration System
-</h3>
+<h1 align="center">
+  <strong>Janus~</strong>
+</h1>
 
 <p align="center">
-  <em>Coordinate AI agents with persistent memory, real-time monitoring, and intelligent routing</em>
-</p>
-
-<p align="center">
-  <a href="https://github.com/AI-et-al/Janus~/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-  <img src="https://img.shields.io/badge/python-3.10+-green.svg" alt="Python">
-  <img src="https://img.shields.io/badge/node-18+-brightgreen.svg" alt="Node.js">
-  <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status">
-  <img src="https://img.shields.io/badge/AI%20et%20al.-founding%20project-purple.svg" alt="AI et al.">
+  <strong>Multi-Model AI Orchestration System</strong>
 </p>
 
 <p align="center">
-  <a href="#-highlights">Highlights</a> ·
-  <a href="#-introduction">Introduction</a> ·
-  <a href="#-architecture">Architecture</a> ·
-  <a href="#-quick-start">Quick Start</a> ·
-  <a href="#-dashboard">Dashboard</a> ·
-  <a href="#-documentation">Docs</a>
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-highlights">Highlights</a> •
+  <a href="#-components">Components</a> •
+  <a href="#-dashboard">Dashboard</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/AI-et-al/Janus-/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+  <img src="https://img.shields.io/badge/python-3.10+-green.svg" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/node-18+-brightgreen.svg" alt="Node.js 18+">
+  <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status: Active">
 </p>
 
 ---
@@ -42,59 +41,9 @@
 
 ## 📖 Introduction
 
-**Janus** (named after the Roman god of transitions and duality) is an AI orchestration system that coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
+**Janus** (named after the Roman god of transitions and duality) coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
 
-Part of **[AI et al.](https://github.com/AI-et-al)** — a growing cooperative of humans and AI building meaningful tools together.
-
-### Core Capabilities
-
-| Capability | Description |
-|------------|-------------|
-| **Agent Orchestration** | Spawn, monitor, and coordinate multiple AI agents working concurrently |
-| **Memory Persistence** | Cross-session memory via claude-mem with automatic context injection |
-| **Cost Optimization** | Smart model routing based on task complexity and budget constraints |
-| **Observability** | Real-time dashboard, SMS notifications, and comprehensive logging |
-
----
-
-## 🏗 Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         JANUS CORE                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
-│   │   Claude    │    │   GPT-4     │    │   Gemini    │        │
-│   │   Opus/     │    │   /o1/      │    │   Pro/      │        │
-│   │   Sonnet    │    │   4o        │    │   Flash     │        │
-│   └──────┬──────┘    └──────┬──────┘    └──────┬──────┘        │
-│          │                  │                  │                │
-│          └──────────────────┼──────────────────┘                │
-│                             │                                   │
-│                    ┌────────▼────────┐                          │
-│                    │  Model Router   │                          │
-│                    │  (capability +  │                          │
-│                    │   cost aware)   │                          │
-│                    └────────┬────────┘                          │
-│                             │                                   │
-│   ┌─────────────────────────┼─────────────────────────┐        │
-│   │                         │                         │        │
-│   ▼                         ▼                         ▼        │
-│ ┌──────────┐         ┌──────────┐         ┌──────────┐        │
-│ │ claude-  │         │ claudel- │         │  llm-    │        │
-│ │   mem    │         │  ytics   │         │ council  │        │
-│ │ (memory) │         │ (costs)  │         │(deliber) │        │
-│ └──────────┘         └──────────┘         └──────────┘        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-                    ┌─────────────────┐
-                    │    Dashboard    │
-                    │  (real-time UI) │
-                    └─────────────────┘
-```
+Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans and AI building meaningful tools together.
 
 ---
 
@@ -102,38 +51,12 @@ Part of **[AI et al.](https://github.com/AI-et-al)** — a growing cooperative o
 
 ```bash
 # Clone the repository
-git clone https://github.com/AI-et-al/Janus~.git
-cd Janus~
+git clone https://github.com/AI-et-al/Janus-.git
+cd Janus-
 
 # Start the dashboard
 cd janus-dashboard && python -m http.server 8080
 # Open http://localhost:8080
-
-# Optional: Enable SMS notifications
-export TWILIO_ACCOUNT_SID="your_sid"
-export TWILIO_AUTH_TOKEN="your_token"
-export TWILIO_PHONE_NUMBER="+1234567890"
-export NOTIFICATION_PHONE_NUMBER="+0987654321"
-```
-
----
-
-## 📊 Dashboard
-
-<p align="center">
-  <em>Real-time agent monitoring with glassmorphism UI</em>
-</p>
-
-**Features:**
-- **Agent Status** — Live view of all active Claude instances with model badges
-- **Animated Indicators** — Glowing effects for agents currently executing tasks
-- **Memory Integration** — View and search persistent memory entries
-- **Research Feed** — Discoveries, decisions, and insights from active sessions
-- **Interactive Controls** — Refresh, filter, and command palette (Cmd+K)
-
-```bash
-# Local development
-cd janus-dashboard && python -m http.server 8080
 ```
 
 ---
@@ -142,66 +65,43 @@ cd janus-dashboard && python -m http.server 8080
 
 | Component | Purpose | Status |
 |-----------|---------|--------|
-| **[janus-dashboard](./janus-dashboard)** | Real-time monitoring UI with glassmorphism design | ✅ Active |
-| **[claude-mem](./claude-mem)** | Persistent cross-session memory system | ✅ Active |
-| **[claudelytics](./claudelytics)** | Usage analytics and cost tracking | ✅ Active |
-| **[llm-council](./llm-council)** | Multi-model deliberation for complex decisions | ✅ Available |
-| **[agentic-flow](./agentic-flow)** | Workflow orchestration engine | ✅ Available |
-| **[ascii-animator](./ascii-animator)** | Terminal ASCII art animations | ✅ Active |
+| **janus-dashboard** | Real-time monitoring UI | ✅ Active |
+| **claude-mem** | Persistent cross-session memory | ✅ Active |
+| **claudelytics** | Usage analytics and cost tracking | ✅ Active |
+| **llm-council** | Multi-model deliberation | ✅ Available |
+| **agentic-flow** | Workflow orchestration | ✅ Available |
+
+---
+
+## 📊 Dashboard
+
+Real-time agent monitoring with glassmorphism UI:
+
+- **Agent Status** — Live view of all active Claude instances
+- **Animated Indicators** — Glowing effects for active agents
+- **Memory Integration** — View and search persistent memory
+- **Interactive Controls** — Refresh, filter, command palette (Cmd+K)
 
 ---
 
 ## 🧠 Design Principles
 
-### The Karpathy Constraint
-> "What can I do with an LLM that I cannot do by spending 30 minutes searching Google?"
+**The Karpathy Constraint** — Every feature must provide genuine leverage beyond basic web searches.
 
-Every feature must clear this bar. We build tools that provide genuine leverage, not AI wrappers around basic functionality.
+**Observable Disagreement** — When AI agents disagree, we surface it rather than suppress it.
 
-### Observable Disagreement
-When AI agents disagree with instructions or each other, we surface it rather than suppress it. Disagreement is signal—it reveals edge cases, ambiguity, and opportunities for better design.
-
-### Memory as Infrastructure
-Context isn't ephemeral. Every session builds on previous ones. Memory is a first-class citizen, not an afterthought.
-
----
-
-## 📚 Documentation
-
-| Document | Description |
-|----------|-------------|
-| [TWILIO_SETUP_GUIDE.md](./TWILIO_SETUP_GUIDE.md) | SMS notification configuration |
-| [IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md) | Development roadmap and milestones |
-| [INTEGRATION_STRATEGY.md](./INTEGRATION_STRATEGY.md) | External project integration guide |
-| [MEM0_VIABILITY_REPORT.md](./MEM0_VIABILITY_REPORT.md) | Memory system evaluation |
+**Memory as Infrastructure** — Context isn't ephemeral. Every session builds on previous ones.
 
 ---
 
 ## 🗺 Roadmap
 
 - [x] Real-time agent dashboard
-- [x] Persistent memory integration (claude-mem)
-- [x] SMS notifications (Twilio)
+- [x] Persistent memory integration
+- [x] SMS notifications
 - [ ] Multi-provider model routing
 - [ ] Cost optimization engine
-- [ ] LLM Council integration for complex decisions
-- [ ] Workflow templates and presets
-
----
-
-## 🤝 Contributing
-
-Janus is an **AI et al.** project—a cooperative of humans and AI building together. Contributions welcome from both species.
-
-```bash
-# Fork, clone, create branch
-git checkout -b feature/your-feature
-
-# Make changes, test locally
-cd janus-dashboard && python -m http.server 8080
-
-# Submit PR
-```
+- [ ] LLM Council integration
 
 ---
 
@@ -213,7 +113,5 @@ MIT License — see [LICENSE](./LICENSE) for details.
 
 <p align="center">
   <strong>AI et al.</strong><br>
-  <em>Humans and AI, building together</em><br><br>
-  <a href="https://github.com/AI-et-al">GitHub</a> ·
-  <a href="#-quick-start">Get Started</a>
+  <em>Humans and AI, building together</em>
 </p>
