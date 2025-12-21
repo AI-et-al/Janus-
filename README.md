@@ -1,24 +1,11 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="AI-et-al_Symposium.gif">
-    <source media="(prefers-color-scheme: light)" srcset="AI-et-al_Symposium.gif">
-    <img alt="Janus - Multi-Model AI Orchestration" src="AI-et-al_Symposium.gif" width="600">
-  </picture>
+  <img src="AI-et-al_Symposium.gif" width="600" alt="Janus - Multi-Model AI Orchestration">
 </p>
 
-<h1 align="center">
-  <strong>Janus~</strong>
-</h1>
+<h1 align="center">Janus~</h1>
 
 <p align="center">
-  <strong>Multi-Model AI Orchestration System</strong>
-</p>
-
-<p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-highlights">Highlights</a> •
-  <a href="#-components">Components</a> •
-  <a href="#-dashboard">Dashboard</a>
+  <b>Multi-Model AI Orchestration System</b>
 </p>
 
 <p align="center">
@@ -30,24 +17,20 @@
 
 ---
 
-## 🔥 Highlights
+## Introduction
+
+**Janus** (named after the Roman god of transitions and duality) coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
+
+Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans and AI building meaningful tools together.
+
+## Highlights
 
 - **Multi-Model Orchestration** — Route tasks to Claude, GPT-4, Gemini, or local models based on capability and cost
 - **Persistent Memory** — Cross-session context that survives restarts and learns from every interaction
 - **Real-Time Dashboard** — Monitor active agents, track costs, and view research insights live
 - **Observable AI** — Every decision logged, every disagreement surfaced, full audit trail
 
----
-
-## 📖 Introduction
-
-**Janus** (named after the Roman god of transitions and duality) coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
-
-Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans and AI building meaningful tools together.
-
----
-
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -59,9 +42,7 @@ cd janus-dashboard && python -m http.server 8080
 # Open http://localhost:8080
 ```
 
----
-
-## 📦 Components
+## Components
 
 | Component | Purpose | Status |
 |-----------|---------|--------|
@@ -71,9 +52,7 @@ cd janus-dashboard && python -m http.server 8080
 | **llm-council** | Multi-model deliberation | ✅ Available |
 | **agentic-flow** | Workflow orchestration | ✅ Available |
 
----
-
-## 📊 Dashboard
+## Dashboard
 
 Real-time agent monitoring with glassmorphism UI:
 
@@ -82,9 +61,7 @@ Real-time agent monitoring with glassmorphism UI:
 - **Memory Integration** — View and search persistent memory
 - **Interactive Controls** — Refresh, filter, command palette (Cmd+K)
 
----
-
-## 🧠 Design Principles
+## Design Principles
 
 **The Karpathy Constraint** — Every feature must provide genuine leverage beyond basic web searches.
 
@@ -92,9 +69,7 @@ Real-time agent monitoring with glassmorphism UI:
 
 **Memory as Infrastructure** — Context isn't ephemeral. Every session builds on previous ones.
 
----
-
-## 🗺 Roadmap
+## Roadmap
 
 - [x] Real-time agent dashboard
 - [x] Persistent memory integration
@@ -103,15 +78,13 @@ Real-time agent monitoring with glassmorphism UI:
 - [ ] Cost optimization engine
 - [ ] LLM Council integration
 
----
-
-## 📄 License
+## License
 
 MIT License — see [LICENSE](./LICENSE) for details.
 
 ---
 
 <p align="center">
-  <strong>AI et al.</strong><br>
-  <em>Humans and AI, building together</em>
+  <b>AI et al.</b><br>
+  <i>Humans and AI, building together</i>
 </p>
