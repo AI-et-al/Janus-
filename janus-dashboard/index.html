@@ -257,28 +257,44 @@
         /* Mascot and Header Enhancements */
         .mascot-container {
             position: relative;
-            width: 280px;
-            height: 320px;
+            width: 100%;
+            max-width: 600px;
             margin: 0 auto 1rem auto;
-            border-radius: 16px 16px 0 0;
-            overflow: visible;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         .mascot-image {
             width: 100%;
             height: auto;
-            max-height: 280px;
+            max-height: 300px;
             object-fit: contain;
-            border-radius: 16px 16px 0 0;
+            display: block;
+            margin: 0 auto;
         }
 
-        .mascot-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            background: linear-gradient(to top, rgba(26, 30, 30, 0.95), transparent);
+        /* Corner ASCII Art */
+        .ascii-corner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 100px;
+            height: 115px;
+            overflow: hidden;
+            border-radius: 8px;
+            z-index: 50;
+            opacity: 0.85;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .ascii-corner:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .ascii-corner canvas {
+            width: 100px;
+            height: 115px;
         }
 
         /* Dashboard Controls */
@@ -636,8 +652,12 @@
 <body>
     <div class="container">
         <header>
-            <div class="mascot-container" id="ascii-art-container">
-                <canvas id="ascii-canvas" style="display: block; max-width: 100%; max-height: 100%;"></canvas>
+            <div class="mascot-container">
+                <img src="AI-et-al_Symposium.gif" alt="The Symposium - AI et al." class="mascot-image">
+            </div>
+            <!-- Small ASCII art Janus in corner -->
+            <div id="ascii-art-container" class="ascii-corner">
+                <canvas id="ascii-canvas"></canvas>
                 <img id="source-image" src="janus-icon.jpg" style="display: none;">
             </div>
             <h1>Janus</h1>
@@ -1123,17 +1143,17 @@
             if (!canvas || !sourceMedia) return;
 
             const config = {
-                mouseRadius: 25,
-                intensity: 4,
-                fontSize: 10,
+                mouseRadius: 15,
+                intensity: 3,
+                fontSize: 6,
                 charSpacing: 0.6,
                 lineHeight: 1,
                 mousePersistence: 0.97,
-                returnSpeed: 0.45,
+                returnSpeed: 0.5,
                 returnWhenStill: true,
                 enableJiggle: true,
-                jiggleIntensity: 0.8,
-                detailFactor: 80,
+                jiggleIntensity: 0.5,
+                detailFactor: 60,
                 contrast: 130,
                 brightness: 70,
                 saturation: 150,
