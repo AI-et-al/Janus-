@@ -273,7 +273,21 @@
             margin: 0 auto;
         }
 
-        /* Corner ASCII Art */
+        /* Top Center ASCII Art (Janus Head) */
+        .ascii-header {
+            width: 280px;
+            height: 320px;
+            margin: 0 auto 1rem auto;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .ascii-header canvas {
+            width: 280px;
+            height: 320px;
+        }
+
+        /* Hide corner version */
         .ascii-corner {
             position: fixed;
             bottom: 20px;
@@ -652,16 +666,17 @@
 <body>
     <div class="container">
         <header>
-            <div class="mascot-container">
-                <img src="AI-et-al_Symposium.gif" alt="The Symposium - AI et al." class="mascot-image">
-            </div>
-            <!-- Small ASCII art Janus in corner -->
-            <div id="ascii-art-container" class="ascii-corner">
+            <!-- ASCII art Janus head at top center -->
+            <div id="ascii-art-container" class="ascii-header">
                 <canvas id="ascii-canvas"></canvas>
                 <img id="source-image" src="janus-icon.jpg" style="display: none;">
             </div>
             <h1>Janus</h1>
             <p class="subtitle">Multi-Model AI Orchestration System</p>
+            <!-- Animated Symposium banner -->
+            <div class="mascot-container">
+                <img src="AI-et-al_Symposium.gif" alt="The Symposium - AI et al." class="mascot-image">
+            </div>
             <p class="last-updated" id="lastUpdated">Loading...</p>
             <div class="status-indicator connected" id="connectionStatus">
                 <span class="dot"></span>
