@@ -1,11 +1,15 @@
 <p align="center">
-  <img src="AI-et-al_Symposium.gif" width="600" alt="Janus - Multi-Model AI Orchestration">
+  <img src="janus-icon.jpg" width="200" alt="Janus">
 </p>
 
 <h1 align="center">Janus</h1>
 
 <p align="center">
   <strong>Multi-Model AI Orchestration System</strong>
+</p>
+
+<p align="center">
+  <img src="AI-et-al_Symposium.gif" width="600" alt="The Symposium - AI et al.">
 </p>
 
 <p align="center">
