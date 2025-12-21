@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="janus-icon.jpg" alt="Janus - Two-Faced God" width="200">
+  <img src="AI-et-al_Symposium.gif" alt="AI et al. - The Symposium" width="600">
 </p>
 
 <h1 align="center">Janus~</h1>
