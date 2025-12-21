@@ -2,35 +2,51 @@
   <img src="AI-et-al_Symposium.gif" width="600" alt="Janus - Multi-Model AI Orchestration">
 </p>
 
-<h1 align="center">Janus~</h1>
-
 <p align="center">
-  <b>Multi-Model AI Orchestration System</b>
+  <a href="#introduction">Introduction</a>
+  ·
+  <a href="#quickstart">Quickstart</a>
+  ·
+  <a href="https://github.com/AI-et-al/Janus-/discussions">Discussions</a>
+  ·
+  <a href="#dashboard">Dashboard</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/AI-et-al/Janus-/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-  <img src="https://img.shields.io/badge/python-3.10+-green.svg" alt="Python 3.10+">
-  <img src="https://img.shields.io/badge/node-18+-brightgreen.svg" alt="Node.js 18+">
-  <img src="https://img.shields.io/badge/status-active-success.svg" alt="Status: Active">
+  <a href="https://github.com/AI-et-al/Janus-">
+    <img src="https://img.shields.io/github/stars/AI-et-al/Janus-?style=social" alt="GitHub Stars">
+  </a>
+  <a href="https://github.com/AI-et-al/Janus-/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  </a>
+  <a href="https://github.com/AI-et-al">
+    <img src="https://img.shields.io/badge/org-AI%20et%20al.-purple?style=flat-square" alt="AI et al.">
+  </a>
 </p>
 
----
+<p align="center">
+  <strong>Multi-Model Orchestration · Persistent Memory · Observable AI</strong>
+</p>
 
 ## Introduction
 
-**Janus** (named after the Roman god of transitions and duality) coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
+[Janus](https://github.com/AI-et-al/Janus-) (named after the Roman god of transitions and duality) coordinates multiple AI agents working in parallel. It looks both forward—routing to the best model for each task—and backward—learning from past sessions through persistent memory.
 
 Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans and AI building meaningful tools together.
 
-## Highlights
+### Key Features & Use Cases
 
-- **Multi-Model Orchestration** — Route tasks to Claude, GPT-4, Gemini, or local models based on capability and cost
-- **Persistent Memory** — Cross-session context that survives restarts and learns from every interaction
-- **Real-Time Dashboard** — Monitor active agents, track costs, and view research insights live
-- **Observable AI** — Every decision logged, every disagreement surfaced, full audit trail
+**Core Capabilities:**
+- **Multi-Model Orchestration**: Route tasks to Claude, GPT-4, Gemini, or local models based on capability and cost
+- **Persistent Memory**: Cross-session context that survives restarts and learns from every interaction
+- **Observable AI**: Every decision logged, every disagreement surfaced, full audit trail
 
-## Quick Start
+**Applications:**
+- **Research Workflows**: Coordinate multiple AI agents for deep research tasks
+- **Cost Optimization**: Route to cheaper models when appropriate, premium when needed
+- **Agent Monitoring**: Real-time visibility into what your AI agents are doing
+
+## Quickstart
 
 ```bash
 # Clone the repository
@@ -56,9 +72,8 @@ cd janus-dashboard && python -m http.server 8080
 
 Real-time agent monitoring with glassmorphism UI:
 
-- **Agent Status** — Live view of all active Claude instances
-- **Animated Indicators** — Glowing effects for active agents
-- **Memory Integration** — View and search persistent memory
+- **Agent Status** — Live view of all active Claude instances with glowing indicators
+- **Memory Integration** — View and search persistent memory across sessions
 - **Interactive Controls** — Refresh, filter, command palette (Cmd+K)
 
 ## Design Principles
@@ -80,11 +95,11 @@ Real-time agent monitoring with glassmorphism UI:
 
 ## License
 
-MIT License — see [LICENSE](./LICENSE) for details.
+MIT — see the [LICENSE](./LICENSE) file for details.
 
 ---
 
 <p align="center">
-  <b>AI et al.</b><br>
-  <i>Humans and AI, building together</i>
+  <strong>AI et al.</strong><br>
+  <em>Humans and AI, building together</em>
 </p>
