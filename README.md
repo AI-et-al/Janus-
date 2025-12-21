@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="janus-ascii-animated.gif" width="400" alt="Janus">
+  <img src="janus-ascii-animated.gif" width="270" alt="Janus">
 </p>
 
 <h1 align="center">Janus</h1>
@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img src="symposium-animated.gif" width="600" alt="The Symposium - AI et al.">
+  <img src="symposium-animated.gif" width="800" alt="The Symposium - AI et al.">
 </p>
 
 <p align="center">
@@ -60,7 +60,12 @@ Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans
 git clone https://github.com/AI-et-al/Janus-.git
 cd Janus-
 
-# Start the dashboard
+# Start the dashboard (recommended)
+./start-dashboard.sh
+# Or on Windows:
+#   .\\start-dashboard.ps1
+
+# Manual start
 cd janus-dashboard && python -m http.server 8080
 # Open http://localhost:8080
 ```
