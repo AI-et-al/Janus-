@@ -44,7 +44,7 @@ Part of **[AI et al.](https://github.com/AI-et-al)** — a cooperative of humans
 
 ## Features
 
-- **Multi-Model Orchestration**: Route tasks to Claude, GPT-4, Gemini, or local models based on capability and cost
+- **Multi-Model Orchestration**: Route tasks to Claude Opus 4.5, GPT-5.2, Gemini 3, or local models based on capability and cost
 - **Persistent Memory**: Cross-session context that survives restarts and learns from every interaction
 - **Observable AI**: Every decision logged, every disagreement surfaced, full audit trail
 - **Research Workflows**: Coordinate multiple AI agents for deep research tasks

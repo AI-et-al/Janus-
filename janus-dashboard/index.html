@@ -773,6 +773,491 @@
         .todo-pill.priority { border-color: rgba(196, 163, 90, 0.25); color: var(--accent-gold); }
         .todo-pill.tag { border-color: rgba(74, 123, 125, 0.25); color: var(--accent-teal); }
         .todo-pill.ref { border-color: rgba(42, 61, 84, 0.35); color: var(--text-secondary); }
+
+        /* Memory Report */
+        .report-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .report-card {
+            background: rgba(0, 0, 0, 0.16);
+            border: 1px solid rgba(232, 220, 200, 0.08);
+            border-radius: 14px;
+            padding: 1rem;
+        }
+
+        .report-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-title h3 { font-size: 1.05rem; font-weight: 700; }
+        .report-subtle { color: var(--text-muted); font-size: 0.85rem; }
+
+        .report-kv {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.35rem 0.75rem;
+            margin: 0.75rem 0 0.5rem 0;
+        }
+
+        .report-k { color: var(--text-muted); font-size: 0.8rem; }
+        .report-v { color: var(--text-secondary); font-size: 0.85rem; }
+
+        .report-list { margin: 0.5rem 0 0.75rem 1.1rem; color: var(--text-secondary); }
+        .report-list li { margin: 0.25rem 0; }
+
+        .report-codeblock {
+            margin-top: 0.75rem;
+            background: rgba(26, 30, 30, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .report-codeheader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            background: rgba(0, 0, 0, 0.20);
+            border-bottom: 1px solid rgba(232, 220, 200, 0.06);
+        }
+
+        .copy-btn {
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(232, 220, 200, 0.12);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover { border-color: rgba(196, 163, 90, 0.25); }
+
+        .report-code {
+            padding: 0.75rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            color: var(--text-primary);
+        }
+
+        /* To-Do Notes */
+        .todo-note {
+            margin-top: 0.4rem;
+        }
+
+        .todo-note summary {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            list-style: none;
+        }
+
+        .todo-note summary::-webkit-details-marker { display: none; }
+
+        .todo-note textarea {
+            width: 100%;
+            margin-top: 0.5rem;
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(232, 220, 200, 0.12);
+            color: var(--text-primary);
+            border-radius: 12px;
+            padding: 0.6rem 0.75rem;
+            min-height: 70px;
+            resize: vertical;
+        }
+
+
+        /* To-Do Editor Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            z-index: 999;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .todo-modal {
+            width: min(1100px, 96vw);
+            max-height: min(82vh, 860px);
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(232, 220, 200, 0.14);
+            background: rgba(37, 42, 46, 0.78);
+            box-shadow:
+                0 18px 80px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(196, 163, 90, 0.12),
+                0 0 40px rgba(74, 123, 125, 0.22);
+        }
+
+        .todo-modal-header, .todo-modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            background: rgba(0, 0, 0, 0.18);
+            border-bottom: 1px solid rgba(232, 220, 200, 0.08);
+        }
+
+        .todo-modal-footer {
+            border-top: 1px solid rgba(232, 220, 200, 0.08);
+            border-bottom: none;
+        }
+
+        .todo-modal-title { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
+        .todo-modal-sub { margin-top: 0.15rem; color: var(--text-muted); font-size: 0.85rem; }
+
+        .todo-modal-body {
+            padding: 1rem;
+            overflow: auto;
+            max-height: calc(min(82vh, 860px) - 120px);
+        }
+
+        .todo-editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .todo-editor-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.55fr 0.55fr 0.9fr 0.9fr 0.4fr 0.6fr;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .todo-editor-grid .hdr { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        .todo-input, .todo-select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(232, 220, 200, 0.12);
+            color: var(--text-primary);
+            border-radius: 12px;
+            padding: 0.45rem 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        .todo-select { padding-right: 0.5rem; }
+
+        .todo-editor-category {
+            background: rgba(0, 0, 0, 0.14);
+            border: 1px solid rgba(232, 220, 200, 0.08);
+            border-radius: 14px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .todo-editor-category summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.85rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .todo-editor-category summary::-webkit-details-marker { display: none; }
+
+        .todo-editor-actions {
+            display: flex;
+            gap: 0.35rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .todo-mini-btn {
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid rgba(232, 220, 200, 0.12);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.45rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .todo-mini-btn:hover { border-color: rgba(196, 163, 90, 0.25); color: var(--text-primary); }
+
+        .todo-mini-btn.danger { border-color: rgba(139, 69, 87, 0.25); color: var(--accent-burgundy); }
+
+        .todo-editor-items { padding: 0.75rem 1rem 1rem 1rem; border-top: 1px solid rgba(232, 220, 200, 0.08); }
+
+        .todo-editor-row { padding: 0.55rem 0; border-bottom: 1px solid rgba(232, 220, 200, 0.06); }
+        .todo-editor-row:last-child { border-bottom: none; }
+
+        .todo-primary-btn { background: rgba(196, 163, 90, 0.14); border-color: rgba(196, 163, 90, 0.28); color: var(--text-primary); }
+        .todo-primary-btn:hover { background: rgba(196, 163, 90, 0.18); }
+
+
+        /* Ambient Glow (expanded) */
+        :root {
+            --glow-teal: rgba(74, 123, 125, 0.22);
+            --glow-gold: rgba(196, 163, 90, 0.20);
+            --glow-burgundy: rgba(139, 69, 87, 0.18);
+            --glow-navy: rgba(42, 61, 84, 0.18);
+        }
+
+        @keyframes softPulse {
+            0%, 100% { filter: saturate(1) brightness(1); }
+            50% { filter: saturate(1.08) brightness(1.02); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow:
+                    0 8px 32px var(--glass-shadow),
+                    0 0 0 1px rgba(232, 220, 200, 0.06),
+                    0 0 26px var(--glow-teal),
+                    0 0 46px var(--glow-gold);
+            }
+            50% {
+                box-shadow:
+                    0 12px 46px rgba(0, 0, 0, 0.55),
+                    0 0 0 1px rgba(232, 220, 200, 0.10),
+                    0 0 34px rgba(74, 123, 125, 0.30),
+                    0 0 64px rgba(196, 163, 90, 0.26);
+            }
+        }
+
+        header,
+        footer,
+        .card,
+        .phase-card,
+        .repo-card,
+        .blog-post,
+        .todo-section,
+        .report-section,
+        .risks-section,
+        .next-actions {
+            box-shadow:
+                0 8px 32px var(--glass-shadow),
+                0 0 0 1px rgba(232, 220, 200, 0.06),
+                0 0 28px var(--glow-teal);
+        }
+
+        .card:hover,
+        .phase-card:hover,
+        .repo-card:hover,
+        .blog-post:hover {
+            box-shadow:
+                0 16px 52px rgba(0, 0, 0, 0.60),
+                0 0 0 1px rgba(196, 163, 90, 0.18),
+                0 0 36px rgba(74, 123, 125, 0.28),
+                0 0 60px rgba(196, 163, 90, 0.20);
+        }
+
+        .action-bullet {
+            box-shadow:
+                0 0 10px rgba(196, 163, 90, 0.55),
+                0 0 18px rgba(74, 123, 125, 0.35);
+        }
+
+        .control-btn,
+        .quick-action-btn,
+        .todo-btn,
+        .copy-btn {
+            box-shadow:
+                0 0 0 1px rgba(232, 220, 200, 0.05),
+                0 0 18px rgba(74, 123, 125, 0.12);
+        }
+
+        .control-btn:hover,
+        .quick-action-btn:hover,
+        .todo-btn:hover,
+        .copy-btn:hover {
+            box-shadow:
+                0 0 0 1px rgba(196, 163, 90, 0.18),
+                0 0 22px rgba(196, 163, 90, 0.18),
+                0 0 28px rgba(74, 123, 125, 0.16);
+        }
+
+        /* Hero media glows (complementary) */
+        .ascii-header {
+            background: radial-gradient(ellipse at 30% 20%, rgba(74, 123, 125, 0.18) 0%, transparent 55%),
+                        radial-gradient(ellipse at 70% 80%, rgba(196, 163, 90, 0.14) 0%, transparent 60%);
+            animation: softPulse 8s ease-in-out infinite;
+            box-shadow:
+                0 12px 54px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(74, 123, 125, 0.14),
+                0 0 32px rgba(74, 123, 125, 0.28),
+                0 0 62px rgba(196, 163, 90, 0.18);
+        }
+
+        .mascot-container {
+            animation: glowPulse 10s ease-in-out infinite;
+            box-shadow:
+                0 12px 54px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(196, 163, 90, 0.14),
+                0 0 34px rgba(139, 69, 87, 0.22),
+                0 0 70px rgba(196, 163, 90, 0.20);
+        }
+
+        /* More glow inside lists */
+        .risk-item {
+            border-bottom-color: rgba(232, 220, 200, 0.08);
+        }
+
+        .todo-category {
+            box-shadow: 0 0 22px rgba(74, 123, 125, 0.10);
+        }
+
+        .todo-category[open] {
+            box-shadow:
+                0 0 0 1px rgba(196, 163, 90, 0.12),
+                0 0 28px rgba(196, 163, 90, 0.14),
+                0 0 30px rgba(74, 123, 125, 0.14);
+        }
+
+
+        /* Glow Typography */
+        h1 {
+            text-shadow: 0 0 24px rgba(196, 163, 90, 0.14), 0 0 16px rgba(74, 123, 125, 0.10);
+        }
+
+        h2 {
+            text-shadow: 0 0 18px rgba(74, 123, 125, 0.18), 0 0 14px rgba(196, 163, 90, 0.10);
+        }
+
+
+        /* Glow Boost (make it obvious) */
+        :root {
+            --glow-teal: rgba(74, 123, 125, 0.45);
+            --glow-gold: rgba(196, 163, 90, 0.38);
+            --glow-burgundy: rgba(139, 69, 87, 0.30);
+            --glow-navy: rgba(42, 61, 84, 0.26);
+        }
+
+        header,
+        footer,
+        .card,
+        .phase-card,
+        .repo-card,
+        .blog-post,
+        .todo-section,
+        .report-section,
+        .risks-section,
+        .next-actions {
+            border-color: rgba(232, 220, 200, 0.14);
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(232, 220, 200, 0.10),
+                0 0 48px rgba(74, 123, 125, 0.28),
+                0 0 92px rgba(196, 163, 90, 0.20);
+            filter:
+                drop-shadow(0 0 26px rgba(74, 123, 125, 0.24))
+                drop-shadow(0 0 62px rgba(196, 163, 90, 0.16));
+        }
+
+        header {
+            box-shadow:
+                0 14px 60px rgba(0, 0, 0, 0.60),
+                0 0 0 1px rgba(232, 220, 200, 0.12),
+                0 0 70px rgba(74, 123, 125, 0.34),
+                0 0 130px rgba(196, 163, 90, 0.22);
+        }
+
+        .ascii-header {
+            box-shadow:
+                0 14px 70px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(74, 123, 125, 0.18),
+                0 0 70px rgba(74, 123, 125, 0.40),
+                0 0 130px rgba(196, 163, 90, 0.22);
+            filter:
+                drop-shadow(0 0 24px rgba(74, 123, 125, 0.30))
+                drop-shadow(0 0 80px rgba(196, 163, 90, 0.18));
+        }
+
+        .mascot-container {
+            box-shadow:
+                0 14px 70px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(196, 163, 90, 0.18),
+                0 0 78px rgba(139, 69, 87, 0.30),
+                0 0 150px rgba(196, 163, 90, 0.20);
+            filter:
+                drop-shadow(0 0 26px rgba(139, 69, 87, 0.24))
+                drop-shadow(0 0 90px rgba(196, 163, 90, 0.18));
+        }
+
+        .mascot-image {
+            filter:
+                drop-shadow(0 0 18px rgba(196, 163, 90, 0.22))
+                drop-shadow(0 0 36px rgba(139, 69, 87, 0.18));
+        }
+
+        /* Make section headers glow too */
+        h2::before {
+            box-shadow:
+                0 0 14px rgba(74, 123, 125, 0.55),
+                0 0 30px rgba(196, 163, 90, 0.28);
+        }
+
+
+        /* Header Halo Glow (behind the big top border) */
+        header {
+            position: relative;
+            z-index: 0;
+            isolation: isolate;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            inset: -26px;
+            border-radius: 26px;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 22% 18%, rgba(74, 123, 125, 0.55) 0%, transparent 58%),
+                radial-gradient(ellipse at 78% 20%, rgba(196, 163, 90, 0.48) 0%, transparent 62%),
+                radial-gradient(ellipse at 50% 85%, rgba(139, 69, 87, 0.34) 0%, transparent 68%),
+                radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0.35) 0%, transparent 70%);
+            filter: blur(26px);
+            opacity: 0.95;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(74, 123, 125, 0.22), rgba(196, 163, 90, 0.18), rgba(139, 69, 87, 0.14));
+            filter: blur(10px);
+            opacity: 0.65;
+        }
+
 </style>
 </head>
 <body>
@@ -874,6 +1359,10 @@
         </section>
 
         <section>
+            <h2>Memory Findings</h2>
+            <div class="report-section" id="memoryReport"></div>
+        </section>
+        <section>
             <h2>To-Do List</h2>
             <div class="todo-section">
                 <div class="todo-toolbar">
@@ -883,8 +1372,15 @@
                         <button class="todo-btn" id="todoFilterDone" onclick="setTodoFilter('done')">Done</button>
                     </div>
                     <div class="todo-toolbar-right">
-                        <span class="todo-summary" id="todoSummary">Loading…</span>
-                        <button class="todo-btn" onclick="resetTodos()" title="Clear saved checkbox state">Reset</button>
+                                            <span class="todo-summary" id="todoSummary">Loading…</span>
+                    <button class="todo-btn" onclick="openTodoEditor()" title="Edit to-do list">Edit</button>
+                    <button class="todo-btn" onclick="exportTodoList()" title="Download to-do list JSON">Export</button>
+                    <button class="todo-btn" onclick="triggerImportTodoList()" title="Import a to-do list JSON">Import</button>
+                    <button class="todo-btn" onclick="saveTodoListToFile()" title="Save JSON to a chosen file (if supported)">Save</button>
+                    <button class="todo-btn" onclick="resetTodoChecks()" title="Clear saved checkbox and note state">Reset checks</button>
+                    <button class="todo-btn" onclick="resetTodoList()" title="Revert list back to progress.json">Reset list</button>
+                    <input id="todoImportFile" type="file" accept="application/json" style="display:none" />
+
                     </div>
                 </div>
                 <div id="todoList"></div>
@@ -980,21 +1476,248 @@
                 </div>
             `).join('');
 
-            renderTodoList(data.todoList);
+            baseTodoList = data.todoList;
+
+            renderTodoList();
+            renderMemoryReport(data.memoryReport);
         }
 
 
+                        function escapeHtml(text) {
+            return String(text)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
+        }
+
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch {
+                try {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.setAttribute('readonly', '');
+                    textarea.style.position = 'fixed';
+                    textarea.style.top = '-1000px';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    return true;
+                } catch {
+                    return false;
+                }
+            }
+        }
+
+        function downloadTextFile(filename, text) {
+            const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function deepClone(value) {
+            return JSON.parse(JSON.stringify(value));
+        }
+
+        function normalizeTodoList(todoList) {
+            if (!todoList || typeof todoList !== 'object') return null;
+            const categories = Array.isArray(todoList.categories) ? todoList.categories : [];
+            const storageKey = todoList.storageKey || DEFAULT_TODO_STORAGE_KEY;
+
+            const makeId = (prefix) => {
+                if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+                return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+            };
+
+            return {
+                title: todoList.title || 'To-Do List',
+                generatedAt: todoList.generatedAt || null,
+                storageKey,
+                categories: categories.map(c => ({
+                    id: c.id || makeId('cat'),
+                    name: c.name || 'Category',
+                    items: Array.isArray(c.items)
+                        ? c.items.map(i => ({
+                            id: i.id || makeId('todo'),
+                            title: i.title || 'New item',
+                            priority: i.priority || '',
+                            owner: i.owner || '',
+                            tags: Array.isArray(i.tags)
+                                ? i.tags
+                                : (typeof i.tags === 'string' ? i.tags.split(',').map(s => s.trim()).filter(Boolean) : []),
+                            refs: Array.isArray(i.refs)
+                                ? i.refs
+                                : (typeof i.refs === 'string' ? i.refs.split(',').map(s => s.trim()).filter(Boolean) : []),
+                            defaultChecked: i.defaultChecked === true
+                        }))
+                        : []
+                }))
+            };
+        }
+
+        function renderMemoryReport(report) {
+            const container = document.getElementById('memoryReport');
+            if (!container) return;
+
+            if (!report || !Array.isArray(report.sections)) {
+                container.innerHTML = '<div class="no-agents">No memory report found in progress.json</div>';
+                return;
+            }
+
+            const cards = report.sections.map(section => {
+                const pros = (section.pros || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+                const cons = (section.cons || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+
+                const howTo = (section.howToRun || []).map((step, idx) => {
+                    const label = step.label ? escapeHtml(step.label) : `Command ${idx + 1}`;
+                    const cmd = step.cmd ? String(step.cmd) : '';
+                    return `
+                        <div class="report-codeblock">
+                            <div class="report-codeheader">
+                                <span class="report-subtle">${label}</span>
+                                <button class="copy-btn" data-copy="${encodeURIComponent(cmd)}">Copy</button>
+                            </div>
+                            <div class="report-code">${escapeHtml(cmd)}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                const plan = (section.integrationPlan || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+
+                return `
+                    <div class="report-card">
+                        <div class="report-title">
+                            <h3>${escapeHtml(section.name || section.id || 'Memory')}</h3>
+                            <span class="report-subtle">${escapeHtml(section.license || '')}</span>
+                        </div>
+                        <div class="report-subtle">${escapeHtml(section.summary || '')}</div>
+
+                        <div class="report-kv">
+                            <div class="report-k">Runs as</div><div class="report-v">${escapeHtml(section.runsAs || '')}</div>
+                            <div class="report-k">Default port</div><div class="report-v">${escapeHtml(section.defaultPort ?? '')}</div>
+                            <div class="report-k">Key endpoints</div><div class="report-v">${escapeHtml((section.endpoints || []).join(', '))}</div>
+                        </div>
+
+                        ${pros ? `<div class="report-subtle" style="margin-top:0.5rem;">Pros</div><ul class="report-list">${pros}</ul>` : ''}
+                        ${cons ? `<div class="report-subtle">Cons</div><ul class="report-list">${cons}</ul>` : ''}
+                        ${plan ? `<div class="report-subtle">Integration plan</div><ul class="report-list">${plan}</ul>` : ''}
+
+                        ${howTo}
+                    </div>
+                `;
+            }).join('');
+
+            const rec = report.recommendation || {};
+            const recSteps = (rec.nextSteps || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+
+            container.innerHTML = `
+                <div class="report-subtle">${escapeHtml(report.title || '')}${report.generatedAt ? ` • Generated ${escapeHtml(report.generatedAt)}` : ''}</div>
+                ${rec.short ? `<div style="margin-top:0.5rem; color: var(--text-primary);">${escapeHtml(rec.short)}</div>` : ''}
+                ${recSteps ? `<ul class="report-list">${recSteps}</ul>` : ''}
+                <div class="report-grid" style="margin-top:0.75rem;">${cards}</div>
+            `;
+
+            container.querySelectorAll('button[data-copy]').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const encoded = btn.getAttribute('data-copy') || '';
+                    const text = decodeURIComponent(encoded);
+                    const ok = await copyToClipboard(text);
+                    const old = btn.textContent;
+                    btn.textContent = ok ? 'Copied' : 'Copy failed';
+                    setTimeout(() => (btn.textContent = old), 900);
+                });
+            });
+        }
+
         const DEFAULT_TODO_STORAGE_KEY = 'janus.todo.v1';
         let todoFilter = 'open';
-        let latestTodoData = null;
+        let baseTodoList = null;
+        let todoEditorDraft = null;
+
+        function getTodoList() {
+            const override = loadTodoListOverride();
+            return override || baseTodoList;
+        }
 
         function getTodoStorageKey() {
-            return (latestTodoData && latestTodoData.storageKey) ? latestTodoData.storageKey : DEFAULT_TODO_STORAGE_KEY;
+            const list = getTodoList();
+            return (list && list.storageKey) ? list.storageKey : DEFAULT_TODO_STORAGE_KEY;
+        }
+
+        function getTodoStateKey() {
+            return `${getTodoStorageKey()}.state`;
+        }
+
+        function getTodoDataKey() {
+            return `${getTodoStorageKey()}.data`;
+        }
+
+        function migrateTodoStateKeyIfNeeded() {
+            const baseKey = getTodoStorageKey();
+            const stateKey = getTodoStateKey();
+            if (localStorage.getItem(stateKey)) return;
+            const old = localStorage.getItem(baseKey);
+            if (!old) return;
+            try {
+                const parsed = JSON.parse(old);
+                if (parsed && typeof parsed === 'object') {
+                    localStorage.setItem(stateKey, old);
+                    localStorage.removeItem(baseKey);
+                }
+            } catch {
+                // ignore
+            }
+        }
+
+        function loadTodoListOverride() {
+            try {
+                const raw = localStorage.getItem(getTodoDataKey());
+                if (!raw) return null;
+                return normalizeTodoList(JSON.parse(raw));
+            } catch {
+                return null;
+            }
+        }
+
+        function saveTodoListOverride(todoList) {
+            try {
+                localStorage.setItem(getTodoDataKey(), JSON.stringify(todoList));
+            } catch {
+                // ignore
+            }
+        }
+
+        function resetTodoList() {
+            try {
+                localStorage.removeItem(getTodoDataKey());
+            } catch {
+                // ignore
+            }
+            closeTodoEditor();
+            renderTodoList();
+        }
+
+        function normalizeTodoEntry(entry) {
+            if (entry === true) return { done: true, note: '' };
+            if (entry && typeof entry === 'object') return { done: !!entry.done, note: entry.note || '' };
+            return { done: false, note: '' };
         }
 
         function loadTodoState() {
             try {
-                const raw = localStorage.getItem(getTodoStorageKey());
+                migrateTodoStateKeyIfNeeded();
+                const raw = localStorage.getItem(getTodoStateKey());
                 return raw ? JSON.parse(raw) : {};
             } catch {
                 return {};
@@ -1003,16 +1726,25 @@
 
         function saveTodoState(state) {
             try {
-                localStorage.setItem(getTodoStorageKey(), JSON.stringify(state));
+                localStorage.setItem(getTodoStateKey(), JSON.stringify(state));
             } catch {
                 // ignore
             }
         }
 
+        function resetTodoChecks() {
+            try {
+                localStorage.removeItem(getTodoStateKey());
+            } catch {
+                // ignore
+            }
+            renderTodoList();
+        }
+
         function setTodoFilter(filter) {
             todoFilter = filter;
             updateTodoFilterButtons();
-            renderTodoList(latestTodoData);
+            renderTodoList();
         }
 
         function updateTodoFilterButtons() {
@@ -1023,21 +1755,245 @@
             if (todoFilter === 'done') document.getElementById('todoFilterDone')?.classList.add('active');
         }
 
-        function resetTodos() {
-            try {
-                localStorage.removeItem(getTodoStorageKey());
-            } catch {
-                // ignore
-            }
-            renderTodoList(latestTodoData);
+        function exportTodoList() {
+            const list = getTodoList();
+            if (!list) return;
+            const filename = `janus-todo-${new Date().toISOString().slice(0, 10)}.json`;
+            downloadTextFile(filename, JSON.stringify(list, null, 2));
         }
 
-        function renderTodoList(todoData) {
-            latestTodoData = todoData || latestTodoData;
+        function triggerImportTodoList() {
+            const input = document.getElementById('todoImportFile');
+            if (!input) return;
+            input.value = '';
+            input.onchange = async () => {
+                const file = input.files && input.files[0];
+                if (!file) return;
+                const text = await file.text();
+                const parsed = normalizeTodoList(JSON.parse(text));
+                if (!parsed) return;
+                parsed.storageKey = getTodoStorageKey();
+                saveTodoListOverride(parsed);
+                renderTodoList();
+            };
+            input.click();
+        }
+
+        async function saveTodoListToFile() {
+            const list = getTodoList();
+            if (!list) return;
+
+            const jsonText = JSON.stringify(list, null, 2);
+
+            if (window.showSaveFilePicker) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: 'todoList.json',
+                        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(jsonText);
+                    await writable.close();
+                    return;
+                } catch {
+                    // fall back
+                }
+            }
+
+            downloadTextFile('todoList.json', jsonText);
+        }
+
+        function ensureId(prefix) {
+            if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+            return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        }
+
+        function openTodoEditor() {
+            const overlay = document.getElementById('todoEditorOverlay');
+            if (!overlay) return;
+            const current = getTodoList();
+            if (!current) return;
+            todoEditorDraft = deepClone(current);
+            overlay.classList.add('open');
+            overlay.setAttribute('aria-hidden', 'false');
+            renderTodoEditorBody();
+        }
+
+        function closeTodoEditor() {
+            const overlay = document.getElementById('todoEditorOverlay');
+            if (!overlay) return;
+            overlay.classList.remove('open');
+            overlay.setAttribute('aria-hidden', 'true');
+            todoEditorDraft = null;
+        }
+
+        function renderTodoEditorBody() {
+            const body = document.getElementById('todoEditorBody');
+            if (!body || !todoEditorDraft) return;
+
+            const cats = Array.isArray(todoEditorDraft.categories) ? todoEditorDraft.categories : [];
+
+            const toolbar = `
+                <div class="todo-editor-toolbar">
+                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+                        <button class="todo-btn todo-primary-btn" onclick="addTodoCategory()">Add category</button>
+                        <button class="todo-btn" onclick="addTodoItemToCategory(0)">Add item (first category)</button>
+                    </div>
+                    <div class="report-subtle">Editing: ${escapeHtml(todoEditorDraft.title || 'To-Do List')}</div>
+                </div>
+            `;
+
+            const headerRow = `
+                <div class="todo-editor-grid" style="margin: 0.25rem 0 0.5rem 0;">
+                    <div class="hdr">Title</div>
+                    <div class="hdr">Priority</div>
+                    <div class="hdr">Owner</div>
+                    <div class="hdr">Tags</div>
+                    <div class="hdr">Refs</div>
+                    <div class="hdr">Default</div>
+                    <div class="hdr">Actions</div>
+                </div>
+            `;
+
+            const categoriesHtml = cats.map((cat, catIndex) => {
+                const items = Array.isArray(cat.items) ? cat.items : [];
+                const itemRows = items.map((item, itemIndex) => {
+                    const prioOptions = ['', 'P0', 'P1', 'P2', 'P3']
+                        .map(p => `<option value="${p}" ${item.priority === p ? 'selected' : ''}>${p || '—'}</option>`)
+                        .join('');
+
+                    const ownerOptions = ['', 'me', 'you', 'both']
+                        .map(o => {
+                            const label = o === '' ? '—' : (o === 'me' ? 'Me' : (o === 'you' ? 'You' : 'Both'));
+                            return `<option value="${o}" ${item.owner === o ? 'selected' : ''}>${label}</option>`;
+                        })
+                        .join('');
+
+                    return `
+                        <div class="todo-editor-row">
+                            ${headerRow}
+                            <div class="todo-editor-grid">
+                                <input class="todo-input" value="${escapeHtml(item.title || '')}" onclick="event.stopPropagation()" oninput="updateTodoItem(${catIndex},${itemIndex},'title',this.value)" />
+                                <select class="todo-select" onclick="event.stopPropagation()" onchange="updateTodoItem(${catIndex},${itemIndex},'priority',this.value)">${prioOptions}</select>
+                                <select class="todo-select" onclick="event.stopPropagation()" onchange="updateTodoItem(${catIndex},${itemIndex},'owner',this.value)">${ownerOptions}</select>
+                                <input class="todo-input" value="${escapeHtml((item.tags || []).join(', '))}" onclick="event.stopPropagation()" oninput="updateTodoItem(${catIndex},${itemIndex},'tags',this.value)" />
+                                <input class="todo-input" value="${escapeHtml((item.refs || []).join(', '))}" onclick="event.stopPropagation()" oninput="updateTodoItem(${catIndex},${itemIndex},'refs',this.value)" />
+                                <input type="checkbox" ${item.defaultChecked === true ? 'checked' : ''} onclick="event.stopPropagation()" onchange="updateTodoItem(${catIndex},${itemIndex},'defaultChecked',this.checked)" />
+                                <div class="todo-editor-actions">
+                                    <button class="todo-mini-btn" onclick="moveTodoItem(${catIndex},${itemIndex},-1); event.stopPropagation()" title="Move up">↑</button>
+                                    <button class="todo-mini-btn" onclick="moveTodoItem(${catIndex},${itemIndex},1); event.stopPropagation()" title="Move down">↓</button>
+                                    <button class="todo-mini-btn danger" onclick="deleteTodoItem(${catIndex},${itemIndex}); event.stopPropagation()" title="Delete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <details class="todo-editor-category" open>
+                        <summary>
+                            <div style="display:flex; gap:0.75rem; align-items:center; min-width:0; flex:1;">
+                                <input class="todo-input" style="max-width: 520px;" value="${escapeHtml(cat.name || '')}" onclick="event.stopPropagation()" oninput="updateTodoCategoryName(${catIndex}, this.value)" />
+                                <span class="report-subtle">${items.length} items</span>
+                            </div>
+                            <div class="todo-editor-actions">
+                                <button class="todo-mini-btn" onclick="moveTodoCategory(${catIndex},-1); event.stopPropagation()" title="Move up">↑</button>
+                                <button class="todo-mini-btn" onclick="moveTodoCategory(${catIndex},1); event.stopPropagation()" title="Move down">↓</button>
+                                <button class="todo-mini-btn" onclick="addTodoItemToCategory(${catIndex}); event.stopPropagation()" title="Add item">+ Item</button>
+                                <button class="todo-mini-btn danger" onclick="deleteTodoCategory(${catIndex}); event.stopPropagation()" title="Delete category">Delete</button>
+                            </div>
+                        </summary>
+                        <div class="todo-editor-items">
+                            ${items.length ? itemRows : '<div class="no-agents" style="padding: 0.5rem 0;">No items yet.</div>'}
+                        </div>
+                    </details>
+                `;
+            }).join('');
+
+            body.innerHTML = toolbar + (cats.length ? categoriesHtml : '<div class="no-agents">No categories. Add one to start.</div>');
+        }
+
+        function updateTodoCategoryName(catIndex, value) {
+            if (!todoEditorDraft) return;
+            todoEditorDraft.categories[catIndex].name = value;
+        }
+
+        function updateTodoItem(catIndex, itemIndex, field, value) {
+            if (!todoEditorDraft) return;
+            const item = todoEditorDraft.categories[catIndex].items[itemIndex];
+            if (field === 'tags' || field === 'refs') {
+                item[field] = String(value).split(',').map(s => s.trim()).filter(Boolean);
+                return;
+            }
+            item[field] = value;
+        }
+
+        function moveTodoCategory(catIndex, delta) {
+            if (!todoEditorDraft) return;
+            const cats = todoEditorDraft.categories;
+            const next = catIndex + delta;
+            if (next < 0 || next >= cats.length) return;
+            const [moved] = cats.splice(catIndex, 1);
+            cats.splice(next, 0, moved);
+            renderTodoEditorBody();
+        }
+
+        function deleteTodoCategory(catIndex) {
+            if (!todoEditorDraft) return;
+            todoEditorDraft.categories.splice(catIndex, 1);
+            renderTodoEditorBody();
+        }
+
+        function addTodoCategory() {
+            if (!todoEditorDraft) return;
+            todoEditorDraft.categories.push({ id: ensureId('cat'), name: 'New Category', items: [] });
+            renderTodoEditorBody();
+        }
+
+        function addTodoItemToCategory(catIndex) {
+            if (!todoEditorDraft) return;
+            if (!todoEditorDraft.categories.length) {
+                addTodoCategory();
+                catIndex = 0;
+            }
+            const safeIndex = Math.max(0, Math.min(catIndex, todoEditorDraft.categories.length - 1));
+            const cat = todoEditorDraft.categories[safeIndex];
+            cat.items = cat.items || [];
+            cat.items.push({ id: ensureId('todo'), title: 'New item', priority: 'P2', owner: '', tags: [], refs: [], defaultChecked: false });
+            renderTodoEditorBody();
+        }
+
+        function moveTodoItem(catIndex, itemIndex, delta) {
+            if (!todoEditorDraft) return;
+            const items = todoEditorDraft.categories[catIndex].items;
+            const next = itemIndex + delta;
+            if (next < 0 || next >= items.length) return;
+            const [moved] = items.splice(itemIndex, 1);
+            items.splice(next, 0, moved);
+            renderTodoEditorBody();
+        }
+
+        function deleteTodoItem(catIndex, itemIndex) {
+            if (!todoEditorDraft) return;
+            todoEditorDraft.categories[catIndex].items.splice(itemIndex, 1);
+            renderTodoEditorBody();
+        }
+
+        function saveTodoEditor() {
+            if (!todoEditorDraft) return;
+            const normalized = normalizeTodoList(todoEditorDraft);
+            if (!normalized) return;
+            normalized.storageKey = getTodoStorageKey();
+            saveTodoListOverride(normalized);
+            closeTodoEditor();
+            renderTodoList();
+        }
+
+        function renderTodoList() {
             const container = document.getElementById('todoList');
             if (!container) return;
 
-            const data = latestTodoData;
+            const data = getTodoList();
             if (!data || !Array.isArray(data.categories)) {
                 container.innerHTML = '<div class="no-agents">No to-do data found in progress.json</div>';
                 const summary = document.getElementById('todoSummary');
@@ -1049,7 +2005,12 @@
 
             const state = loadTodoState();
             const allItems = data.categories.flatMap(c => c.items || []);
-            const isDone = (item) => (state[item.id] ?? item.defaultChecked ?? false) === true;
+
+            const isDone = (item) => Object.prototype.hasOwnProperty.call(state, item.id)
+                ? normalizeTodoEntry(state[item.id]).done
+                : item.defaultChecked === true;
+
+            const getNote = (item) => normalizeTodoEntry(state[item.id]).note;
 
             const totalCount = allItems.length;
             const doneCount = allItems.filter(isDone).length;
@@ -1064,28 +2025,40 @@
                 return !isDone(item);
             };
 
+            const ownerPill = (owner) => {
+                if (!owner) return '';
+                const label = owner === 'me' ? 'Me' : owner === 'you' ? 'You' : 'Both';
+                return `<span class="todo-pill tag">Owner: ${label}</span>`;
+            };
+
             container.innerHTML = data.categories.map(category => {
-                const items = (category.items || []).filter(shouldShow);
+                const visibleItems = (category.items || []).filter(shouldShow);
                 const categoryAll = (category.items || []);
                 const categoryDone = categoryAll.filter(isDone).length;
                 const categoryTotal = categoryAll.length;
                 const countLabel = `${categoryDone}/${categoryTotal}`;
                 const openByDefault = categoryDone !== categoryTotal;
 
-                const itemsHtml = items.length
-                    ? items.map(item => {
+                const itemsHtml = visibleItems.length
+                    ? visibleItems.map(item => {
                         const checked = isDone(item);
+                        const note = getNote(item);
                         const pills = [];
-                        if (item.priority) pills.push(`<span class="todo-pill priority">${item.priority}</span>`);
-                        (item.tags || []).forEach(t => pills.push(`<span class="todo-pill tag">${t}</span>`));
-                        (item.refs || []).slice(0, 2).forEach(r => pills.push(`<span class="todo-pill ref">${r}</span>`));
+                        if (item.priority) pills.push(`<span class="todo-pill priority">${escapeHtml(item.priority)}</span>`);
+                        if (item.owner) pills.push(ownerPill(item.owner));
+                        (item.tags || []).forEach(t => pills.push(`<span class="todo-pill tag">${escapeHtml(t)}</span>`));
+                        (item.refs || []).slice(0, 2).forEach(r => pills.push(`<span class="todo-pill ref">${escapeHtml(r)}</span>`));
 
                         return `
                             <div class="todo-item ${checked ? 'done' : ''}">
-                                <input class="todo-checkbox" type="checkbox" data-todo-id="${item.id}" ${checked ? 'checked' : ''} />
+                                <input class="todo-checkbox" type="checkbox" data-todo-id="${escapeHtml(item.id)}" data-default-checked="${item.defaultChecked === true ? 'true' : 'false'}" ${checked ? 'checked' : ''} />
                                 <div class="todo-content">
-                                    <div class="todo-title">${item.title}</div>
+                                    <div class="todo-title">${escapeHtml(item.title)}</div>
                                     ${pills.length ? `<div class="todo-meta">${pills.join('')}</div>` : ''}
+                                    <details class="todo-note">
+                                        <summary>${note ? 'Edit note' : 'Add note'}</summary>
+                                        <textarea data-todo-note="${escapeHtml(item.id)}" placeholder="Add your notes…">${escapeHtml(note)}</textarea>
+                                    </details>
                                 </div>
                             </div>
                         `;
@@ -1096,7 +2069,7 @@
                     <details class="todo-category" ${openByDefault ? 'open' : ''}>
                         <summary>
                             <div class="todo-category-header">
-                                <span class="todo-category-title">${category.name}</span>
+                                <span class="todo-category-title">${escapeHtml(category.name)}</span>
                             </div>
                             <span class="todo-category-count">${countLabel}</span>
                         </summary>
@@ -1109,14 +2082,58 @@
                 input.addEventListener('change', (e) => {
                     const id = e.target.getAttribute('data-todo-id');
                     const next = e.target.checked;
+                    const defaultChecked = e.target.getAttribute('data-default-checked') === 'true';
+
                     const nextState = loadTodoState();
-                    if (next) nextState[id] = true;
+                    const entry = normalizeTodoEntry(nextState[id]);
+                    entry.done = next;
+
+                    if (entry.done || entry.note || defaultChecked) nextState[id] = entry;
                     else delete nextState[id];
+
                     saveTodoState(nextState);
-                    renderTodoList(latestTodoData);
+                    renderTodoList();
+                });
+            });
+
+            container.querySelectorAll('textarea[data-todo-note]').forEach(textarea => {
+                textarea.addEventListener('input', (e) => {
+                    const id = e.target.getAttribute('data-todo-note');
+                    const note = e.target.value;
+
+                    const nextState = loadTodoState();
+                    const entry = normalizeTodoEntry(nextState[id]);
+                    entry.note = note;
+
+                    const item = allItems.find(x => x.id === id);
+                    const defaultChecked = item && item.defaultChecked === true;
+
+                    if (entry.done || entry.note || defaultChecked) nextState[id] = entry;
+                    else delete nextState[id];
+
+                    saveTodoState(nextState);
                 });
             });
         }
+
+
+        
+
+        function initTodoEditorUX() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeTodoEditor();
+            });
+
+            const overlay = document.getElementById('todoEditorOverlay');
+            if (overlay) {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) closeTodoEditor();
+                });
+            }
+        }
+
+        initTodoEditorUX();
+
         async function loadBlogPosts() {
             try {
                 const response = await fetch('blog-posts.json');
@@ -1626,6 +2643,32 @@
             initializeAscii();
         })();
     </script>
+
+        <div class="modal-overlay" id="todoEditorOverlay" aria-hidden="true">
+            <div class="todo-modal" role="dialog" aria-modal="true" aria-label="Edit to-do list">
+                <div class="todo-modal-header">
+                    <div>
+                        <div class="todo-modal-title">Edit To-Do List</div>
+                        <div class="todo-modal-sub">Edits save locally in your browser. Use Export/Save to persist outside the browser.</div>
+                    </div>
+                    <button class="todo-btn" onclick="closeTodoEditor()">Close</button>
+                </div>
+                <div class="todo-modal-body" id="todoEditorBody"></div>
+                <div class="todo-modal-footer">
+                    <button class="todo-btn" onclick="resetTodoList()">Reset to progress.json</button>
+                    <button class="todo-btn primary" onclick="saveTodoEditor()">Save changes</button>
+                </div>
+            </div>
+        </div>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
 
