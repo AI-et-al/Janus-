@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="AI-et-al_Symposium.gif" alt="Janus - Multi-Model AI Orchestration" width="700">
+  <img src="janus-icon.jpg" alt="Janus - Two-Faced God" width="200">
 </p>
 
 <h1 align="center">Janus~</h1>

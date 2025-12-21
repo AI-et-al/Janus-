@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janus - Project Progress Dashboard</title>
+    <style>
+        :root {
+            --bg-dark: #1A1E1E;
+            --bg-card: #252A2E;
+            --text-primary: #E8DCC8;
+            --text-secondary: #D4B896;
+            --text-muted: #8B7355;
+            --accent-blue: #4A7B7D;
+            --accent-green: #4A7B7D;
+            --accent-yellow: #C4A35A;
+            --accent-purple: #6B3344;
+            --accent-gold: #C4A35A;
+            --accent-teal: #4A7B7D;
+            --accent-burgundy: #8B4557;
+            --accent-bronze: #8B7355;
+            --accent-navy: #2A3D54;
+            --glass-bg: rgba(37, 42, 46, 0.55);
+            --glass-border: rgba(232, 220, 200, 0.12);
+            --glass-shadow: rgba(0, 0, 0, 0.35);
+            --glass-blur: 14px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(74, 123, 125, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse at 90% 15%, rgba(196, 163, 90, 0.25) 0%, transparent 35%),
+                radial-gradient(ellipse at 75% 55%, rgba(139, 69, 87, 0.2) 0%, transparent 35%),
+                radial-gradient(ellipse at 20% 80%, rgba(42, 61, 84, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 40%, rgba(107, 51, 68, 0.15) 0%, transparent 45%),
+                var(--bg-dark);
+            background-attachment: fixed;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle { color: var(--text-secondary); font-size: 1.1rem; }
+        .last-updated { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.5rem; }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+            border-color: rgba(196, 163, 90, 0.25);
+        }
+
+        .card-title { font-size: 0.875rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .card-value { font-size: 3rem; font-weight: 700; }
+        .card-value.progress { color: var(--accent-gold); }
+        .card-value.confidence { color: var(--accent-teal); }
+        .card-value.phases { color: var(--accent-burgundy); }
+        .card-value.repos { color: var(--accent-bronze); }
+
+        .progress-bar-container {
+            background: rgba(26, 30, 30, 0.6);
+            border-radius: 9999px;
+            height: 12px;
+            margin-top: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-bar { height: 100%; border-radius: 9999px; transition: width 0.5s ease; }
+        .progress-bar.blue { background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze)); }
+        .progress-bar.green { background: linear-gradient(90deg, var(--accent-teal), #6B9A9C); }
+
+        section { margin-bottom: 3rem; }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1.5rem;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-teal));
+            border-radius: 2px;
+        }
+
+        .phases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
+
+        .phase-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .phase-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45); }
+
+        .phase-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .phase-title { font-weight: 600; font-size: 1.1rem; }
+
+        .phase-week {
+            background: rgba(26, 30, 30, 0.6);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .phase-stats { display: flex; gap: 1.5rem; padding: 1rem 1.5rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(4px); }
+        .stat { text-align: center; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+        .phase-tasks { padding: 1rem 1.5rem; }
+
+        .task { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(232, 220, 200, 0.06); }
+        .task:last-child { border-bottom: none; }
+
+        .task-status { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; }
+        .task-status.done { background: var(--accent-green); color: white; box-shadow: 0 0 12px rgba(74, 123, 125, 0.4); }
+        .task-status.partial { background: var(--accent-yellow); color: white; box-shadow: 0 0 12px rgba(196, 163, 90, 0.4); }
+        .task-status.pending { background: rgba(61, 68, 72, 0.6); color: var(--text-muted); }
+        .task-name { flex: 1; font-size: 0.9rem; }
+        .task-confidence { font-size: 0.75rem; color: var(--text-muted); padding: 0.125rem 0.5rem; background: rgba(26, 30, 30, 0.5); border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .repos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+
+        .repo-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .repo-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45); }
+
+        .repo-confidence { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; flex-shrink: 0; }
+        .repo-confidence.high { background: rgba(74, 123, 125, 0.25); color: var(--accent-teal); box-shadow: 0 0 20px rgba(74, 123, 125, 0.3); }
+        .repo-confidence.medium { background: rgba(196, 163, 90, 0.25); color: var(--accent-gold); box-shadow: 0 0 20px rgba(196, 163, 90, 0.3); }
+        .repo-confidence.low { background: rgba(139, 69, 87, 0.25); color: var(--accent-burgundy); box-shadow: 0 0 20px rgba(139, 69, 87, 0.3); }
+
+        .repo-info { flex: 1; }
+        .repo-name { font-weight: 600; font-size: 0.95rem; }
+        .repo-desc { color: var(--text-muted); font-size: 0.8rem; }
+        .repo-status { font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 4px; text-transform: uppercase; font-weight: 600; }
+        .repo-status.active { background: rgba(74, 123, 125, 0.25); color: var(--accent-teal); }
+        .repo-status.available { background: rgba(42, 61, 84, 0.4); color: var(--text-secondary); }
+        .repo-status.integrated { background: rgba(196, 163, 90, 0.25); color: var(--accent-gold); }
+        .repo-status.cloned { background: rgba(139, 115, 85, 0.25); color: var(--accent-bronze); }
+
+        .risks-section, .next-actions {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .risk-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(232, 220, 200, 0.06); }
+        .risk-item:last-child { border-bottom: none; }
+        .risk-severity { width: 80px; text-align: center; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
+        .risk-severity.high { background: rgba(139, 69, 87, 0.3); color: var(--accent-burgundy); }
+        .risk-severity.medium-high { background: rgba(196, 163, 90, 0.3); color: var(--accent-gold); }
+        .risk-severity.medium { background: rgba(74, 123, 125, 0.3); color: var(--accent-teal); }
+        .risk-info { flex: 1; }
+        .risk-name { font-weight: 500; }
+        .risk-mitigation { color: var(--text-muted); font-size: 0.85rem; }
+
+        .action-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0; }
+        .action-bullet { width: 8px; height: 8px; background: linear-gradient(135deg, var(--accent-gold), var(--accent-teal)); border-radius: 50%; margin-top: 0.45rem; flex-shrink: 0; box-shadow: 0 0 8px rgba(196, 163, 90, 0.5); }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Mascot and Header Enhancements */
+        .mascot-container {
+            position: relative;
+            width: 160px;
+            margin: 0 auto 1rem auto;
+            border-radius: 16px 16px 0 0;
+            overflow: visible;
+        }
+
+        .mascot-image {
+            width: 100%;
+            height: auto;
+            max-height: 160px; width: 160px;
+            object-fit: contain;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .mascot-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: linear-gradient(to top, rgba(26, 30, 30, 0.95), transparent);
+        }
+
+        /* Dashboard Controls */
+        .dashboard-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .control-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.75rem 1.25rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(74, 123, 125, 0.2);
+            border-color: var(--accent-teal);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: rgba(74, 123, 125, 0.3);
+            border-color: var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        .control-btn .icon {
+            font-size: 1rem;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .status-indicator.connected {
+            color: #4ADE80;
+        }
+
+        .status-indicator .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+        }
+
+        .status-indicator.connected .dot {
+            background: #4ADE80;
+            animation: pulse 2s infinite;
+        }
+
+        /* Quick Actions Panel */
+        .quick-actions {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 100;
+        }
+
+        .quick-action-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(74, 123, 125, 0.3);
+            border-color: var(--accent-teal);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(74, 123, 125, 0.4);
+        }
+
+        .quick-action-btn.primary {
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-gold));
+            border: none;
+            color: var(--bg-dark);
+        }
+
+        .quick-action-btn.primary:hover {
+            box-shadow: 0 0 30px rgba(196, 163, 90, 0.5);
+        }
+
+        .blog-posts { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .blog-post {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-post:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45); }
+
+        .blog-header { padding: 1.5rem; border-bottom: 1px solid var(--glass-border); background: rgba(0, 0, 0, 0.1); }
+        .blog-meta { display: flex; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+        .blog-date { color: var(--text-muted); font-size: 0.8rem; }
+        .blog-type { background: rgba(42, 61, 84, 0.5); color: var(--text-secondary); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+        .blog-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .blog-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .blog-scores { display: flex; gap: 1rem; padding: 1rem 1.5rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(4px); flex-wrap: wrap; }
+        .score-item { text-align: center; min-width: 70px; }
+        .score-value { font-size: 1.25rem; font-weight: 700; }
+        .score-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+
+        .blog-summary { padding: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .blog-summary p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .blog-insights { padding: 1.5rem; }
+        .blog-insights h4 { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.75rem; }
+
+        .insight-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(232, 220, 200, 0.06); }
+        .insight-item:last-child { border-bottom: none; }
+        .insight-priority { font-size: 0.65rem; padding: 0.125rem 0.375rem; border-radius: 4px; font-weight: 600; text-transform: uppercase; flex-shrink: 0; }
+        .insight-priority.high { background: rgba(139, 69, 87, 0.3); color: var(--accent-burgundy); }
+        .insight-priority.medium { background: rgba(196, 163, 90, 0.3); color: var(--accent-gold); }
+        .insight-text { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .blog-source { padding: 1rem 1.5rem; background: rgba(0, 0, 0, 0.25); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .source-info { font-size: 0.8rem; color: var(--text-muted); }
+        .source-link { color: var(--accent-teal); text-decoration: none; font-size: 0.8rem; }
+        .source-link:hover { text-decoration: underline; color: #6B9A9C; }
+
+        .blog-tags { display: flex; gap: 0.5rem; padding: 0 1.5rem 1rem; flex-wrap: wrap; }
+        .blog-tag { background: rgba(26, 30, 30, 0.6); color: var(--text-muted); padding: 0.125rem 0.5rem; border-radius: 4px; font-size: 0.7rem; }
+
+        /* Agent Monitoring */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .agent-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+            opacity: 0.5;
+        }
+
+        .agent-card.active::before {
+            background: linear-gradient(90deg, #4ADE80, var(--accent-teal));
+            opacity: 1;
+        }
+
+        .agent-card.active {
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.4), 0 0 40px rgba(74, 222, 128, 0.2), 0 8px 32px var(--glass-shadow);
+            border-color: rgba(74, 222, 128, 0.3);
+            animation: activeGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes activeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.4), 0 0 40px rgba(74, 222, 128, 0.2), 0 8px 32px var(--glass-shadow); }
+            50% { box-shadow: 0 0 30px rgba(74, 222, 128, 0.6), 0 0 60px rgba(74, 222, 128, 0.3), 0 8px 32px var(--glass-shadow); }
+        }
+
+        .agent-card.idle::before {
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-bronze));
+            opacity: 0.8;
+        }
+
+        .agent-card.idle {
+            box-shadow: 0 0 15px rgba(196, 163, 90, 0.3), 0 8px 32px var(--glass-shadow);
+        }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .agent-id {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .agent-status.active {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ADE80;
+        }
+
+        .agent-status.idle {
+            background: rgba(196, 163, 90, 0.2);
+            color: var(--accent-gold);
+        }
+
+        .agent-status.stopped {
+            background: rgba(139, 69, 87, 0.2);
+            color: var(--accent-burgundy);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.active { background: #4ADE80; }
+        .status-dot.idle { background: var(--accent-gold); }
+        .status-dot.stopped { background: var(--accent-burgundy); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .model-badge.opus {
+            background: rgba(139, 69, 87, 0.3);
+            color: #D4A5B0;
+            border: 1px solid rgba(139, 69, 87, 0.4);
+        }
+
+        .model-badge.sonnet {
+            background: rgba(74, 123, 125, 0.3);
+            color: #8EBFC1;
+            border: 1px solid rgba(74, 123, 125, 0.4);
+        }
+
+        .model-badge.haiku {
+            background: rgba(196, 163, 90, 0.3);
+            color: var(--accent-gold);
+            border: 1px solid rgba(196, 163, 90, 0.4);
+        }
+
+        .model-badge.gpt {
+            background: rgba(16, 163, 127, 0.25);
+            color: #10A37F;
+            border: 1px solid rgba(16, 163, 127, 0.4);
+        }
+
+        .model-badge.gemini {
+            background: rgba(66, 133, 244, 0.25);
+            color: #4285F4;
+            border: 1px solid rgba(66, 133, 244, 0.4);
+        }
+
+        .agent-task {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .agent-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .agent-project {
+            background: rgba(26, 30, 30, 0.5);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .no-agents {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.75rem; }
+            .card-value { font-size: 2.5rem; }
+            .phases-grid { grid-template-columns: 1fr; }
+            .agents-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="mascot-container">
+                <img src="janus-icon.jpg" alt="The Symposium - AI et al." class="mascot-image">
+            </div>
+            <h1>Janus</h1>
+            <p class="subtitle">Multi-Model AI Orchestration System</p>
+            <p class="last-updated" id="lastUpdated">Loading...</p>
+            <div class="status-indicator connected" id="connectionStatus">
+                <span class="dot"></span>
+                <span>Connected</span>
+            </div>
+        </header>
+
+        <div class="dashboard-controls">
+            <button class="control-btn" onclick="refreshAll()" title="Refresh all data">
+                <span class="icon">&#8635;</span> Refresh
+            </button>
+            <button class="control-btn" onclick="toggleAutoRefresh()" id="autoRefreshBtn" title="Toggle auto-refresh">
+                <span class="icon">&#9202;</span> Auto-Refresh: ON
+            </button>
+            <button class="control-btn" onclick="filterAgents('all')" id="filterAll" title="Show all agents">
+                <span class="icon">&#9673;</span> All Agents
+            </button>
+            <button class="control-btn" onclick="filterAgents('active')" id="filterActive" title="Show active only">
+                <span class="icon">&#9679;</span> Active Only
+            </button>
+            <button class="control-btn" onclick="openMemoryPanel()" title="View memory system">
+                <span class="icon">&#128190;</span> Memory
+            </button>
+        </div>
+
+        <!-- Quick Actions FAB -->
+        <div class="quick-actions">
+            <button class="quick-action-btn" onclick="scrollToTop()" title="Back to top">&#8679;</button>
+            <button class="quick-action-btn" onclick="toggleDarkMode()" title="Toggle contrast">&#9788;</button>
+            <button class="quick-action-btn primary" onclick="openCommandPalette()" title="Command palette">&#9889;</button>
+        </div>
+
+        <div class="overview-grid">
+            <div class="card">
+                <div class="card-title">Overall Progress</div>
+                <div class="card-value progress" id="overallProgress">0%</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar blue" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Confidence Score</div>
+                <div class="card-value confidence" id="overallConfidence">0%</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar green" id="confidenceBar" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Phases</div>
+                <div class="card-value phases" id="phasesCount">0</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Repositories</div>
+                <div class="card-value repos" id="reposCount">0</div>
+            </div>
+        </div>
+
+        <section>
+            <h2>Active Agents</h2>
+            <div class="agents-grid" id="agentsGrid">
+                <div class="no-agents">Loading agents...</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Implementation Phases</h2>
+            <div class="phases-grid" id="phasesGrid"></div>
+        </section>
+
+        <section>
+            <h2>Repository Status</h2>
+            <div class="repos-grid" id="reposGrid"></div>
+        </section>
+
+        <section>
+            <h2>Risk Assessment</h2>
+            <div class="risks-section" id="risksList"></div>
+        </section>
+
+        <section>
+            <h2>Next Actions</h2>
+            <div class="next-actions" id="actionsList"></div>
+        </section>
+
+        <section>
+            <h2>Research & Insights</h2>
+            <div class="blog-posts" id="blogPosts"></div>
+        </section>
+
+        <footer>
+            <p>Janus Project Dashboard - Powered by AgentWatch Integration</p>
+            <p>AI et al.</p>
+        </footer>
+    </div>
+
+    <script>
+        async function loadProgress() {
+            try {
+                const response = await fetch('progress.json');
+                const data = await response.json();
+                renderDashboard(data);
+            } catch (error) {
+                console.error('Failed to load progress data:', error);
+                document.getElementById('lastUpdated').textContent = 'Error loading data';
+            }
+        }
+
+        function renderDashboard(data) {
+            document.getElementById('lastUpdated').textContent = `Last Updated: ${new Date(data.lastUpdated).toLocaleString()}`;
+            document.getElementById('overallProgress').textContent = `${data.overallProgress}%`;
+            document.getElementById('overallConfidence').textContent = `${data.overallConfidence}%`;
+            document.getElementById('progressBar').style.width = `${data.overallProgress}%`;
+            document.getElementById('confidenceBar').style.width = `${data.overallConfidence}%`;
+            document.getElementById('phasesCount').textContent = data.phases.length;
+            document.getElementById('reposCount').textContent = data.repositories.length;
+
+            document.getElementById('phasesGrid').innerHTML = data.phases.map(phase => `
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <span class="phase-title">${phase.name}</span>
+                        <span class="phase-week">Week ${phase.week}</span>
+                    </div>
+                    <div class="phase-stats">
+                        <div class="stat">
+                            <div class="stat-value" style="color: var(--accent-teal)">${phase.progress}%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value" style="color: var(--accent-gold)">${phase.confidence}%</div>
+                            <div class="stat-label">Confidence</div>
+                        </div>
+                    </div>
+                    <div class="phase-tasks">
+                        ${phase.tasks.map(task => `
+                            <div class="task">
+                                <div class="task-status ${task.status}">${task.status === 'done' ? '&#10003;' : task.status === 'partial' ? '~' : ''}</div>
+                                <span class="task-name">${task.name}</span>
+                                <span class="task-confidence">${task.confidence}%</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('reposGrid').innerHTML = data.repositories.map(repo => {
+                const conf = repo.confidence >= 80 ? 'high' : repo.confidence >= 60 ? 'medium' : 'low';
+                return `
+                <div class="repo-card">
+                    <div class="repo-confidence ${conf}">${repo.confidence}%</div>
+                    <div class="repo-info">
+                        <div class="repo-name">${repo.name}</div>
+                        <div class="repo-desc">${repo.description}</div>
+                    </div>
+                    <span class="repo-status ${repo.status}">${repo.status}</span>
+                </div>
+            `}).join('');
+
+            document.getElementById('risksList').innerHTML = data.risks.map(risk => `
+                <div class="risk-item">
+                    <span class="risk-severity ${risk.severity}">${risk.severity}</span>
+                    <div class="risk-info">
+                        <div class="risk-name">${risk.name}</div>
+                        <div class="risk-mitigation">Mitigation: ${risk.mitigation}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('actionsList').innerHTML = data.nextActions.map(action => `
+                <div class="action-item">
+                    <div class="action-bullet"></div>
+                    <span>${action}</span>
+                </div>
+            `).join('');
+        }
+
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('blog-posts.json');
+                const data = await response.json();
+                document.getElementById('blogPosts').innerHTML = data.posts.map(post => `
+                    <article class="blog-post">
+                        <div class="blog-header">
+                            <div class="blog-meta">
+                                <span class="blog-date">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                <span class="blog-type">${post.type}</span>
+                            </div>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-subtitle">${post.subtitle}</p>
+                        </div>
+                        <div class="blog-scores">
+                            <div class="score-item"><div class="score-value" style="color: var(--accent-purple)">${post.scores.novelty}/10</div><div class="score-label">Novelty</div></div>
+                            <div class="score-item"><div class="score-value" style="color: var(--accent-green)">${post.scores.practicalValue}/10</div><div class="score-label">Practical</div></div>
+                            <div class="score-item"><div class="score-value" style="color: var(--accent-teal)">${post.scores.credibility}/10</div><div class="score-label">Credibility</div></div>
+                            <div class="score-item"><div class="score-value" style="color: var(--accent-gold)">${post.scores.relevanceToJanus}/10</div><div class="score-label">Relevance</div></div>
+                        </div>
+                        <div class="blog-summary"><p>${post.executiveSummary}</p></div>
+                        <div class="blog-insights">
+                            <h4>Actionable Insights</h4>
+                            ${post.actionableInsights.slice(0, 3).map(insight => `
+                                <div class="insight-item">
+                                    <span class="insight-priority ${insight.priority}">${insight.priority}</span>
+                                    <span class="insight-text">${insight.action}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="blog-tags">${post.tags.map(tag => `<span class="blog-tag">#${tag}</span>`).join('')}</div>
+                        <div class="blog-source">
+                            <span class="source-info">Source: ${post.source.author} @ ${post.source.organization}</span>
+                            <a href="${post.source.url}" target="_blank" class="source-link">Read Original</a>
+                        </div>
+                    </article>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load blog posts:', error);
+            }
+        }
+
+        async function loadAgents() {
+            try {
+                const response = await fetch('memory/agents.json');
+                const data = await response.json();
+                const agents = data.agents || [];
+
+                if (agents.length === 0) {
+                    document.getElementById('agentsGrid').innerHTML = '<div class="no-agents">No active agents</div>';
+                    return;
+                }
+
+                document.getElementById('agentsGrid').innerHTML = agents.map(agent => {
+                    const modelClass = getModelClass(agent.model);
+                    const modelDisplay = getModelDisplay(agent.model);
+                    const timeSinceUpdate = getTimeSince(agent.last_update);
+
+                    return `
+                        <div class="agent-card ${agent.status}">
+                            <div class="agent-header">
+                                <span class="agent-id">${agent.id}</span>
+                                <span class="agent-status ${agent.status}">
+                                    <span class="status-dot ${agent.status}"></span>
+                                    ${agent.status}
+                                </span>
+                            </div>
+                            <span class="model-badge ${modelClass}">${modelDisplay}</span>
+                            <div class="agent-task">${agent.task}</div>
+                            <div class="agent-meta">
+                                <span class="agent-project">${agent.project || 'Unknown'}</span>
+                                <span>Updated ${timeSinceUpdate}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Failed to load agents:', error);
+                document.getElementById('agentsGrid').innerHTML = '<div class="no-agents">Failed to load agents</div>';
+            }
+        }
+
+        function getModelClass(model) {
+            if (!model) return '';
+            const m = model.toLowerCase();
+            if (m.includes('opus')) return 'opus';
+            if (m.includes('sonnet')) return 'sonnet';
+            if (m.includes('haiku')) return 'haiku';
+            if (m.includes('gpt')) return 'gpt';
+            if (m.includes('gemini')) return 'gemini';
+            return '';
+        }
+
+        function getModelDisplay(model) {
+            if (!model) return 'Unknown';
+            const m = model.toLowerCase();
+            if (m.includes('opus-4-5') || m.includes('opus-4.5')) return 'Claude Opus 4.5';
+            if (m.includes('opus')) return 'Claude Opus';
+            if (m.includes('sonnet-4')) return 'Claude Sonnet 4';
+            if (m.includes('sonnet-3.5') || m.includes('sonnet-3-5')) return 'Claude Sonnet 3.5';
+            if (m.includes('sonnet')) return 'Claude Sonnet';
+            if (m.includes('haiku')) return 'Claude Haiku';
+            if (m.includes('gpt-4o')) return 'GPT-4o';
+            if (m.includes('gpt-4')) return 'GPT-4';
+            if (m.includes('gpt')) return 'GPT';
+            if (m.includes('gemini-2')) return 'Gemini 2.0';
+            if (m.includes('gemini')) return 'Gemini';
+            return model.split('-').slice(0, 2).join(' ');
+        }
+
+        function getTimeSince(timestamp) {
+            if (!timestamp) return 'unknown';
+            const now = new Date();
+            const then = new Date(timestamp);
+            const diffMs = now - then;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            return `${diffDays}d ago`;
+        }
+
+        // State management
+        let autoRefreshEnabled = true;
+        let currentAgentFilter = 'all';
+        let allAgentsData = [];
+        let refreshIntervals = [];
+
+        // Initialize
+        loadProgress();
+        loadBlogPosts();
+        loadAgents();
+        startAutoRefresh();
+
+        function startAutoRefresh() {
+            refreshIntervals = [
+                setInterval(loadProgress, 30000),
+                setInterval(loadBlogPosts, 60000),
+                setInterval(loadAgents, 15000)
+            ];
+        }
+
+        function stopAutoRefresh() {
+            refreshIntervals.forEach(interval => clearInterval(interval));
+            refreshIntervals = [];
+        }
+
+        // Control Functions
+        function refreshAll() {
+            const btn = event.target.closest('.control-btn');
+            btn.style.transform = 'rotate(360deg)';
+            setTimeout(() => btn.style.transform = '', 500);
+            loadProgress();
+            loadBlogPosts();
+            loadAgents();
+            showToast('Data refreshed');
+        }
+
+        function toggleAutoRefresh() {
+            autoRefreshEnabled = !autoRefreshEnabled;
+            const btn = document.getElementById('autoRefreshBtn');
+            if (autoRefreshEnabled) {
+                startAutoRefresh();
+                btn.innerHTML = '<span class="icon">&#9202;</span> Auto-Refresh: ON';
+                btn.classList.add('active');
+            } else {
+                stopAutoRefresh();
+                btn.innerHTML = '<span class="icon">&#9202;</span> Auto-Refresh: OFF';
+                btn.classList.remove('active');
+            }
+            showToast(autoRefreshEnabled ? 'Auto-refresh enabled' : 'Auto-refresh disabled');
+        }
+
+        function filterAgents(filter) {
+            currentAgentFilter = filter;
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(filter === 'all' ? 'filterAll' : 'filterActive').classList.add('active');
+            renderFilteredAgents();
+        }
+
+        function renderFilteredAgents() {
+            const agents = currentAgentFilter === 'all'
+                ? allAgentsData
+                : allAgentsData.filter(a => a.status === 'active');
+
+            if (agents.length === 0) {
+                document.getElementById('agentsGrid').innerHTML = '<div class="no-agents">No ' + (currentAgentFilter === 'active' ? 'active ' : '') + 'agents</div>';
+                return;
+            }
+
+            document.getElementById('agentsGrid').innerHTML = agents.map(agent => {
+                const modelClass = getModelClass(agent.model);
+                const modelDisplay = getModelDisplay(agent.model);
+                const timeSinceUpdate = getTimeSince(agent.last_update);
+
+                return `
+                    <div class="agent-card ${agent.status}">
+                        <div class="agent-header">
+                            <span class="agent-id">${agent.id}</span>
+                            <span class="agent-status ${agent.status}">
+                                <span class="status-dot ${agent.status}"></span>
+                                ${agent.status}
+                            </span>
+                        </div>
+                        <span class="model-badge ${modelClass}">${modelDisplay}</span>
+                        <div class="agent-task">${agent.task}</div>
+                        <div class="agent-meta">
+                            <span class="agent-project">${agent.project || 'Unknown'}</span>
+                            <span>Updated ${timeSinceUpdate}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openMemoryPanel() {
+            showToast('Memory panel coming soon - mem0 integration in progress');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('high-contrast');
+            showToast('Contrast toggled');
+        }
+
+        function openCommandPalette() {
+            const cmd = prompt('Enter command:\n\n• refresh - Refresh data\n• agents - Show agents\n• memory - Open memory\n• status - Show status');
+            if (cmd) {
+                switch(cmd.toLowerCase().trim()) {
+                    case 'refresh': refreshAll(); break;
+                    case 'agents': filterAgents('all'); break;
+                    case 'memory': openMemoryPanel(); break;
+                    case 'status': showToast('Status: ' + (autoRefreshEnabled ? 'Auto-refresh ON' : 'Auto-refresh OFF') + ', Agents: ' + allAgentsData.length); break;
+                    default: showToast('Unknown command: ' + cmd);
+                }
+            }
+        }
+
+        function showToast(message) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 100px;
+                right: 2rem;
+                background: var(--glass-bg);
+                backdrop-filter: blur(14px);
+                border: 1px solid var(--glass-border);
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                color: var(--text-primary);
+                font-size: 0.85rem;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Add toast animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            .high-contrast {
+                filter: contrast(1.2) brightness(1.1);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Update loadAgents to store data
+        const originalLoadAgents = loadAgents;
+        loadAgents = async function() {
+            try {
+                const response = await fetch('memory/agents.json');
+                const data = await response.json();
+                allAgentsData = data.agents || [];
+                renderFilteredAgents();
+            } catch (error) {
+                console.error('Failed to load agents:', error);
+                document.getElementById('agentsGrid').innerHTML = '<div class="no-agents">Failed to load agents</div>';
+            }
+        };
+    </script>
+</body>
+</html>
