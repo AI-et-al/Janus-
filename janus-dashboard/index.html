@@ -287,6 +287,19 @@
             height: 320px;
         }
 
+        /* Static Janus Header Image */
+        .janus-header-image {
+            max-width: 500px;
+            margin: 0 auto 1rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .janus-header-image img {
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(196, 163, 90, 0.3));
+        }
+
         /* Hide corner version */
         .ascii-corner {
             position: fixed;
@@ -1263,10 +1276,9 @@
 <body>
     <div class="container">
         <header>
-            <!-- ASCII art Janus head at top center -->
-            <div id="ascii-art-container" class="ascii-header">
-                <canvas id="ascii-canvas"></canvas>
-                <img id="source-image" src="janus-icon.jpg" style="display: none;">
+            <!-- Janus header image -->
+            <div class="janus-header-image">
+                <img src="janus-color2.png" alt="Janus" style="max-width: 500px; width: 100%; height: auto;">
             </div>
             <h1>Janus</h1>
             <p class="subtitle">Multi-Model AI Orchestration System</p>
