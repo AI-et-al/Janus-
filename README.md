@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="janus-color2.png" width="600" alt="Janus">
+  <img src="janus-color.gif" width="600" alt="Janus">
 </p>
 
 <h1 align="center">Janus</h1>
