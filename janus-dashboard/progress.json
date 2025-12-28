@@ -1,0 +1,874 @@
+{
+  "projectName": "Janus Multi-Model AI Orchestration System",
+  "lastUpdated": "2025-12-28T20:00:00Z",
+  "overallProgress": 45,
+  "overallConfidence": 75,
+  "aiContributors": {
+    "claude": {
+      "role": "Primary Orchestrator",
+      "contributions": [
+        "Context Bridge implementation (types, read, write, sync)",
+        "Model Router with cost entry persistence",
+        "Orchestrator framework",
+        "CLI implementation",
+        "Dashboard with glassmorphism UI",
+        "LiteLLM gateway integration",
+        "claude-mem persistent memory",
+        "Type consolidation (src/types.ts canonical)",
+        "Claudelytics dashboard integration (MAX subscription analytics)",
+        "Cost tracking architecture design"
+      ],
+      "artifacts": [
+        "Janus/src/context-bridge/*",
+        "Janus/src/model-router.ts",
+        "Janus/src/orchestrator.ts",
+        "Janus/src/types.ts",
+        "janus-dashboard/index.html",
+        "janus-dashboard/costs.json",
+        "litellm_config.yaml",
+        "start_litellm.py"
+      ],
+      "lastActive": "2025-12-28"
+    },
+    "chatgpt": {
+      "role": "Strategic Analyst",
+      "contributions": [
+        "Repository fitness assessment (19 repos evaluated)",
+        "12 major roadblocks identification",
+        "15-step implementation plan",
+        "OpenRouter/Piebald sufficiency analysis",
+        "CONTINUITY.md ledger system",
+        "AGENTS.md contributor guide"
+      ],
+      "artifacts": [
+        "CONTINUITY.md",
+        "AGENTS.md"
+      ],
+      "lastActive": "2025-12-24"
+    },
+    "gemini": {
+      "role": "Scout Swarm Agent",
+      "contributions": [
+        "GEMINI-MEM-001 protocol establishment",
+        "Scout role definition (Execution Layer)",
+        "Cross-session memory stream",
+        "Dashboard agent registration"
+      ],
+      "artifacts": [
+        "Janus/janus-context/state/gemini_shared_memory.md"
+      ],
+      "lastActive": "2025-12-21"
+    }
+  },
+  "phases": [
+    {
+      "id": 1,
+      "name": "Foundation",
+      "week": 1,
+      "progress": 85,
+      "confidence": 85,
+      "status": "in_progress",
+      "tasks": [
+        {
+          "name": "Context Bridge Types",
+          "status": "done",
+          "confidence": 95
+        },
+        {
+          "name": "Context Bridge Read",
+          "status": "done",
+          "confidence": 90
+        },
+        {
+          "name": "Context Bridge Write",
+          "status": "done",
+          "confidence": 90
+        },
+        {
+          "name": "Context Bridge Sync",
+          "status": "done",
+          "confidence": 85
+        },
+        {
+          "name": "Context Bridge API",
+          "status": "done",
+          "confidence": 85
+        },
+        {
+          "name": "Core Types",
+          "status": "done",
+          "confidence": 90
+        },
+        {
+          "name": "Model Router",
+          "status": "done",
+          "confidence": 85,
+          "notes": "Cost entry persistence added Dec 28"
+        },
+        {
+          "name": "Orchestrator",
+          "status": "partial",
+          "confidence": 50
+        },
+        {
+          "name": "CLI",
+          "status": "done",
+          "confidence": 80
+        },
+        {
+          "name": "janus-context/",
+          "status": "done",
+          "confidence": 90
+        },
+        {
+          "name": "Dependencies",
+          "status": "done",
+          "confidence": 85
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Swarms",
+      "week": 2,
+      "progress": 15,
+      "confidence": 60,
+      "status": "in_progress",
+      "tasks": [
+        {
+          "name": "Scout Swarm Protocol",
+          "status": "partial",
+          "confidence": 80,
+          "notes": "GEMINI-MEM-001 protocol established by Gemini"
+        },
+        {
+          "name": "Scout Swarm Implementation",
+          "status": "pending",
+          "confidence": 70
+        },
+        {
+          "name": "Council Swarm Protocol",
+          "status": "partial",
+          "confidence": 65,
+          "notes": "Proposal→critique→ranking→synthesis flow defined by ChatGPT"
+        },
+        {
+          "name": "Council Swarm Implementation",
+          "status": "pending",
+          "confidence": 60
+        },
+        {
+          "name": "Executor Swarm",
+          "status": "pending",
+          "confidence": 75
+        },
+        {
+          "name": "Inter-swarm Communication",
+          "status": "pending",
+          "confidence": 50
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Memory",
+      "week": 3,
+      "progress": 5,
+      "confidence": 50,
+      "status": "pending",
+      "tasks": [
+        {
+          "name": "claude-os Integration",
+          "status": "pending",
+          "confidence": 60
+        },
+        {
+          "name": "ReasoningBank",
+          "status": "pending",
+          "confidence": 65
+        },
+        {
+          "name": "Cross-layer Sync",
+          "status": "pending",
+          "confidence": 55
+        },
+        {
+          "name": "Session Continuity",
+          "status": "partial",
+          "confidence": 30
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Analytics",
+      "week": 4,
+      "progress": 50,
+      "confidence": 80,
+      "status": "in_progress",
+      "tasks": [
+        {
+          "name": "Cost Tracking",
+          "status": "done",
+          "confidence": 90,
+          "notes": "ModelRouter persistence + claudelytics dashboard integration"
+        },
+        {
+          "name": "Performance Metrics",
+          "status": "pending",
+          "confidence": 75
+        },
+        {
+          "name": "Burn Rate",
+          "status": "pending",
+          "confidence": 80
+        },
+        {
+          "name": "CLI Reporting",
+          "status": "partial",
+          "confidence": 30
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Optimization",
+      "week": 5,
+      "progress": 0,
+      "confidence": 45,
+      "status": "pending",
+      "tasks": [
+        {
+          "name": "Execution Learning",
+          "status": "pending",
+          "confidence": 50
+        },
+        {
+          "name": "Model Selection AI",
+          "status": "pending",
+          "confidence": 45
+        },
+        {
+          "name": "Topology Auto-select",
+          "status": "pending",
+          "confidence": 40
+        },
+        {
+          "name": "Performance Tuning",
+          "status": "pending",
+          "confidence": 55
+        }
+      ]
+    }
+  ],
+  "repositories": [
+    {
+      "name": "Janus/",
+      "status": "active",
+      "confidence": 85,
+      "description": "Core orchestration system"
+    },
+    {
+      "name": "agentic-flow/",
+      "status": "available",
+      "confidence": 75,
+      "description": "Agent orchestration library"
+    },
+    {
+      "name": "llm-council/",
+      "status": "available",
+      "confidence": 70,
+      "description": "Multi-model deliberation"
+    },
+    {
+      "name": "claudelytics/",
+      "status": "available",
+      "confidence": 80,
+      "description": "Usage analytics (Rust)"
+    },
+    {
+      "name": "claude-os/",
+      "status": "available",
+      "confidence": 65,
+      "description": "Persistent memory (Python)"
+    },
+    {
+      "name": "claude-mem/",
+      "status": "integrated",
+      "confidence": 90,
+      "description": "Memory plugin"
+    },
+    {
+      "name": "agentwatch/",
+      "status": "cloned",
+      "confidence": 60,
+      "description": "Runtime monitoring"
+    }
+  ],
+  "risks": [
+    {
+      "name": "agentic-flow Integration",
+      "severity": "high",
+      "mitigation": "Start with ModelRouter only",
+      "source": "claude"
+    },
+    {
+      "name": "llm-council Python Port",
+      "severity": "medium-high",
+      "mitigation": "Consider subprocess initially",
+      "source": "claude"
+    },
+    {
+      "name": "claude-os MCP Complexity",
+      "severity": "medium",
+      "mitigation": "Use as external service",
+      "source": "claude"
+    },
+    {
+      "name": "Performance at Scale",
+      "severity": "medium",
+      "mitigation": "Incremental testing",
+      "source": "claude"
+    },
+    {
+      "name": "Consensus Definition",
+      "severity": "high",
+      "mitigation": "Define clear voting/ranking protocol",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Model Routing Policy",
+      "severity": "high",
+      "mitigation": "Balance quality, cost, latency with tiered approach",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Long-horizon Planning Reliability",
+      "severity": "high",
+      "mitigation": "Task graphs with checkpoints, drift detection",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Memory Quality & Staleness",
+      "severity": "medium-high",
+      "mitigation": "Retrieval relevance scoring, TTL policies",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Safe Tool Execution",
+      "severity": "high",
+      "mitigation": "Approval gates, sandbox, rollback capability",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Cross-model Prompt Normalization",
+      "severity": "medium",
+      "mitigation": "Standardized JSON I/O schema",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Token Economy Enforcement",
+      "severity": "medium",
+      "mitigation": "Budget caps per task tier, cost tracking",
+      "source": "chatgpt"
+    },
+    {
+      "name": "Human-in-loop UX",
+      "severity": "medium",
+      "mitigation": "SMS workflows, interrupt/resume patterns",
+      "source": "chatgpt"
+    }
+  ],
+  "nextActions": [
+    "Choose canonical core repo (Janus/ vs Janus-1/) - freeze MVP scope",
+    "Define council protocol: proposal → critique → ranking → synthesis",
+    "Standardize model I/O schema (JSON) for all roles",
+    "Complete Model Router with provider abstraction (OpenRouter first)",
+    "Add model-selection policy (cost tiers + task criticality + fallback)",
+    "Build Scout Swarm MVP with parallelism (Promise.all) + aggregation",
+    "Implement execution agents with safe tool runner (approvals + sandbox)",
+    "Create persistence layer (decisions, tasks, summaries, artifacts)",
+    "Integrate memory search and summarization (claude-mem/mem0)",
+    "Add cost tracking and reporting (claudelytics formulas)"
+  ],
+  "implementationPlan": {
+    "source": "ChatGPT Strategic Analysis",
+    "steps": [
+      "1. Choose canonical core repo and freeze MVP scope",
+      "2. Define council protocol (proposal→critique→ranking→synthesis)",
+      "3. Standardize model I/O schema (JSON) for all roles",
+      "4. Implement provider abstraction (OpenRouter first; add direct APIs later)",
+      "5. Add model-selection policy (cost tiers + task criticality + fallback)",
+      "6. Build long-horizon planner (task graph + dependencies + checkpoints)",
+      "7. Implement execution agents with safe tool runner (approvals + sandbox)",
+      "8. Create persistence layer (decisions, tasks, summaries, artifacts)",
+      "9. Integrate memory search and summarization (claude-mem/mem0)",
+      "10. Add cost tracking and reporting (claudelytics or custom)",
+      "11. Build observability (event log + UI dashboard + session replay)",
+      "12. Add user-in-loop control (approvals, interrupt/resume, arbiter gates)",
+      "13. Implement SMS notifications and responses (Twilio)",
+      "14. Add evaluation harness (golden tasks, regression suite, cost benchmarks)",
+      "15. Document operational playbook and agent prompts/skills"
+    ]
+  },
+  "todoList": {
+    "title": "Janus~ Comprehensive To-Do",
+    "generatedAt": "2025-12-21T10:48:22Z",
+    "storageKey": "janus.todo.v1",
+    "categories": [
+      {
+        "id": "memory",
+        "name": "Memory & Context Strategy (claude-mem + mem0)",
+        "items": [
+          {
+            "id": "mem-choose-provider",
+            "title": "Choose primary memory strategy (ContextBridge vs claude-mem vs mem0/OpenMemory)",
+            "priority": "P0",
+            "tags": [
+              "decision",
+              "architecture"
+            ],
+            "owner": "both"
+          },
+          {
+            "id": "mem-license-claudemem",
+            "title": "Review claude-mem AGPL implications; decide whether an API-only boundary is acceptable",
+            "priority": "P0",
+            "tags": [
+              "license",
+              "risk"
+            ],
+            "owner": "me"
+          },
+          {
+            "id": "mem-provider-interface",
+            "title": "Define a MemoryProvider interface in Janus (search, add, summarize, health)",
+            "priority": "P0",
+            "tags": [
+              "janus",
+              "interface"
+            ],
+            "refs": [
+              "Janus/src/orchestrator.ts",
+              "Janus/src/context-bridge/index.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "mem-id-mapping",
+            "title": "Standardize projectId / userId mapping across memory systems",
+            "priority": "P1",
+            "tags": [
+              "identity",
+              "consistency"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "mem-retrieval-policy",
+            "title": "Implement retrieval policy (limits, recency vs relevance, dedupe, token budgets)",
+            "priority": "P1",
+            "tags": [
+              "retrieval",
+              "prompting"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "mem-eval-benchmark",
+            "title": "Add a benchmark harness (latency, token savings, answer quality) for memory injection",
+            "priority": "P1",
+            "tags": [
+              "evaluation",
+              "metrics"
+            ],
+            "owner": "you"
+          }
+        ]
+      },
+      {
+        "id": "claude-mem",
+        "name": "claude-mem Integration (Worker HTTP API @ http://127.0.0.1:37777)",
+        "items": [
+          {
+            "id": "cm-start-worker",
+            "title": "Get claude-mem worker service running locally; confirm /api/health and viewer UI",
+            "priority": "P0",
+            "tags": [
+              "setup",
+              "service"
+            ],
+            "refs": [
+              "claude-mem/README.md"
+            ],
+            "owner": "me"
+          },
+          {
+            "id": "cm-query-recent-context",
+            "title": "Prototype context bootstrap using /api/context/recent?project=...&limit=...",
+            "priority": "P1",
+            "tags": [
+              "retrieval"
+            ],
+            "refs": [
+              "claude-mem/src/services/worker/http/routes/SearchRoutes.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "cm-timeline-by-query",
+            "title": "Wire timeline recall via /api/timeline/by-query?query=... for incident/decision archaeology",
+            "priority": "P1",
+            "tags": [
+              "search",
+              "debugging"
+            ],
+            "refs": [
+              "claude-mem/src/services/worker/http/routes/SearchRoutes.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "cm-ingest-janus-events",
+            "title": "Ingest Janus task/decision events into claude-mem as observations (batch endpoint)",
+            "priority": "P1",
+            "tags": [
+              "ingest",
+              "events"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "cm-context-inject",
+            "title": "Use /api/context/inject output to build a compact session primer before routing",
+            "priority": "P1",
+            "tags": [
+              "context",
+              "routing"
+            ],
+            "refs": [
+              "claude-mem/src/services/worker/http/routes/SearchRoutes.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "cm-operational-hardening",
+            "title": "Add timeouts + fallback behavior when claude-mem is down/unreachable",
+            "priority": "P2",
+            "tags": [
+              "resilience"
+            ],
+            "owner": "you"
+          }
+        ]
+      },
+      {
+        "id": "mem0",
+        "name": "mem0 / OpenMemory (FastAPI + MCP @ http://localhost:8765)",
+        "items": [
+          {
+            "id": "m0-run-openmemory",
+            "title": "Run OpenMemory locally (Docker): cd mem0/openmemory && make build && make up",
+            "priority": "P0",
+            "tags": [
+              "docker",
+              "setup"
+            ],
+            "refs": [
+              "mem0/openmemory/README.md",
+              "mem0/openmemory/api/README.md"
+            ],
+            "owner": "me"
+          },
+          {
+            "id": "m0-config-env",
+            "title": "Configure OPENAI_API_KEY + consistent USER/NEXT_PUBLIC_USER_ID for OpenMemory",
+            "priority": "P0",
+            "tags": [
+              "config",
+              "secrets"
+            ],
+            "owner": "me"
+          },
+          {
+            "id": "m0-api-spike",
+            "title": "Spike basic CRUD: add a memory, search it back via OpenMemory API",
+            "priority": "P1",
+            "tags": [
+              "api",
+              "prototype"
+            ],
+            "owner": "both"
+          },
+          {
+            "id": "m0-janus-wrapper",
+            "title": "Implement a Janus wrapper for mem0/OpenMemory (search + add + summarize)",
+            "priority": "P1",
+            "tags": [
+              "janus",
+              "integration"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "m0-vector-store-config",
+            "title": "Choose and configure a vector store strategy for mem0 (local dev first)",
+            "priority": "P2",
+            "tags": [
+              "vectordb",
+              "performance"
+            ],
+            "refs": [
+              "mem0/openmemory/api/app/routers/config.py"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "m0-privacy-controls",
+            "title": "Define privacy rules: what becomes long-term memory vs stays in session context",
+            "priority": "P2",
+            "tags": [
+              "privacy",
+              "policy"
+            ],
+            "owner": "both"
+          }
+        ]
+      },
+      {
+        "id": "core",
+        "name": "Janus Core (Router / Orchestrator / Swarms)",
+        "items": [
+          {
+            "id": "core-model-router",
+            "title": "Complete Model Router integration (capability + cost aware routing)",
+            "priority": "P0",
+            "tags": [
+              "router"
+            ],
+            "refs": [
+              "Janus/src/model-router.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "core-scout-swarm",
+            "title": "Build Scout Swarm MVP with parallelism (Promise.all) + aggregation",
+            "priority": "P0",
+            "tags": [
+              "swarms",
+              "parallel"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "core-orchestrator-exec",
+            "title": "Finish orchestrator execution loop (create session, route tasks, record decisions)",
+            "priority": "P1",
+            "tags": [
+              "orchestrator"
+            ],
+            "refs": [
+              "Janus/src/orchestrator.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "core-contextbridge-tests",
+            "title": "Add/extend integration tests for Context Bridge + sync behavior",
+            "priority": "P1",
+            "tags": [
+              "tests"
+            ],
+            "refs": [
+              "Janus/src/context-bridge/__tests__/context-bridge.test.ts"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "core-council-swarm",
+            "title": "Design Council Swarm protocol (multi-model deliberation + disagreement surfacing)",
+            "priority": "P1",
+            "tags": [
+              "council",
+              "protocol"
+            ],
+            "owner": "both"
+          },
+          {
+            "id": "core-executor-swarm",
+            "title": "Implement Executor Swarm (apply patches, run tests, report) with safety rails",
+            "priority": "P2",
+            "tags": [
+              "executor",
+              "automation"
+            ],
+            "owner": "you"
+          }
+        ]
+      },
+      {
+        "id": "obs",
+        "name": "Dashboard / Observability / Ops",
+        "items": [
+          {
+            "id": "dash-todos-ui",
+            "title": "Add a persistent To-Do List section to the dashboard",
+            "priority": "P0",
+            "tags": [
+              "dashboard"
+            ],
+            "defaultChecked": true,
+            "owner": "you"
+          },
+          {
+            "id": "dash-memory-health",
+            "title": "Add dashboard widgets for memory service health (claude-mem :37777, OpenMemory :8765)",
+            "priority": "P2",
+            "tags": [
+              "dashboard",
+              "health"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "obs-cost-tracking",
+            "title": "Implement cost tracking and burn rate reporting (claudelytics formulas)",
+            "priority": "P1",
+            "tags": [
+              "costs",
+              "analytics"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "obs-agentwatch",
+            "title": "Strengthen AgentWatch integration (agent status, last update, task metadata)",
+            "priority": "P2",
+            "tags": [
+              "agents",
+              "monitoring"
+            ],
+            "owner": "you"
+          },
+          {
+            "id": "ops-twilio",
+            "title": "Wire Twilio notifications (progress + alerts) into orchestrator",
+            "priority": "P2",
+            "tags": [
+              "ops",
+              "notifications"
+            ],
+            "refs": [
+              "TWILIO_SETUP_GUIDE.md"
+            ],
+            "owner": "me"
+          },
+          {
+            "id": "ops-release-checklist",
+            "title": "Create a release checklist (env vars, ports, docker, smoke tests)",
+            "priority": "P2",
+            "tags": [
+              "docs",
+              "ops"
+            ],
+            "owner": "both"
+          }
+        ]
+      }
+    ]
+  },
+  "memoryReport": {
+    "title": "Memory Enhancers: claude-mem vs mem0/OpenMemory",
+    "generatedAt": "2025-12-21T10:48:22Z",
+    "sections": [
+      {
+        "id": "claude-mem",
+        "name": "claude-mem",
+        "license": "AGPL-3.0",
+        "runsAs": "Claude Code plugin + local worker HTTP API (Bun/Node)",
+        "defaultPort": 37777,
+        "endpoints": [
+          "/api/health",
+          "/api/search",
+          "/api/context/recent",
+          "/api/context/inject",
+          "/api/timeline/by-query"
+        ],
+        "summary": "Best for developer-session continuity + searchable project work history captured from tool use. Provides an HTTP API Janus can call for retrieval.",
+        "pros": [
+          "Project/session semantics: observations, prompts, summaries, timelines",
+          "Hybrid search endpoints ready to consume from Janus",
+          "Viewer UI for debugging memory contents"
+        ],
+        "cons": [
+          "AGPL licensing may constrain distribution/embedding",
+          "Operational dependency on a local worker service (port + process management)"
+        ],
+        "howToRun": [
+          {
+            "label": "Claude Code plugin install (inside Claude Code)",
+            "cmd": "/plugin marketplace add thedotmack/claude-mem\\n/plugin install claude-mem"
+          },
+          {
+            "label": "Verify worker health",
+            "cmd": "curl http://127.0.0.1:37777/api/health"
+          }
+        ],
+        "integrationPlan": [
+          "Implement Janus MemoryProvider: call /api/context/recent at session start",
+          "On each Janus decision/task completion, POST observations (batch) to claude-mem",
+          "Use /api/timeline/by-query for recall when debugging regressions"
+        ]
+      },
+      {
+        "id": "mem0-openmemory",
+        "name": "mem0 / OpenMemory",
+        "license": "Apache-2.0",
+        "runsAs": "FastAPI service + UI + MCP server (Docker Compose recommended)",
+        "defaultPort": 8765,
+        "endpoints": [
+          "/docs",
+          "/mcp"
+        ],
+        "summary": "Best for user-centric long-term memory and personalization. OpenMemory runs locally with API + MCP endpoint but needs an LLM key configured.",
+        "pros": [
+          "Apache 2.0 licensing is friendly for embedding and distribution",
+          "Memory service can be treated as an external dependency",
+          "MCP support if we want to plug into other clients"
+        ],
+        "cons": [
+          "Needs OPENAI_API_KEY (or other provider) and Docker setup",
+          "Requires choosing a schema/strategy for what Janus stores"
+        ],
+        "howToRun": [
+          {
+            "label": "Configure env",
+            "cmd": "cd mem0/openmemory\\nmake env\\n# edit api/.env (OPENAI_API_KEY) and ui/.env"
+          },
+          {
+            "label": "Start services",
+            "cmd": "cd mem0/openmemory && make build && make up"
+          },
+          {
+            "label": "Open API docs",
+            "cmd": "http://localhost:8765/docs"
+          }
+        ],
+        "integrationPlan": [
+          "Define what Janus stores as memories (preferences, project facts, decisions)",
+          "Implement MemoryProvider wrapper that calls OpenMemory API search/add",
+          "Add privacy rules + retention policy"
+        ]
+      }
+    ],
+    "recommendation": {
+      "short": "Use claude-mem immediately for dev-session continuity; evaluate mem0/OpenMemory in parallel for user-centric memory once the provider interface exists.",
+      "nextSteps": [
+        "Me: decide licensing stance + whether Janus will distribute with claude-mem",
+        "Me: set up OpenMemory env + keys if we want mem0 path",
+        "You: implement MemoryProvider interface + adapters"
+      ]
+    }
+  }
+}
