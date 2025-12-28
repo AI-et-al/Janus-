@@ -1344,6 +1344,49 @@
         </div>
 
         <section>
+            <h2>Claude Usage Analytics</h2>
+            <p class="section-subtitle" style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.875rem;">
+                MAX Subscription ($200/mo) • Values shown are equivalent API costs for reference
+            </p>
+            <div class="overview-grid" id="costGrid">
+                <div class="card">
+                    <div class="card-title">Today's Usage Value</div>
+                    <div class="card-value" id="todayCost" style="color: var(--accent-gold);">$0</div>
+                    <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Equivalent API cost</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Monthly Usage Value</div>
+                    <div class="card-value" id="monthlyCost" style="color: var(--accent-teal);">$0</div>
+                    <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">vs $200 MAX subscription</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">New Tokens Today</div>
+                    <div class="card-value" id="todayTokens" style="color: var(--accent-burgundy);">0</div>
+                    <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Input + Output</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Cache Efficiency</div>
+                    <div class="card-value" id="cacheEfficiency" style="color: var(--accent-bronze);">0%</div>
+                    <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Context reuse rate</div>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 1rem;">
+                <div class="card-title">MAX Subscription Value</div>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                    <div style="flex: 1;">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar blue" id="maxValueBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div id="maxValueRatio" style="color: var(--accent-gold); font-weight: 600;">0x</div>
+                </div>
+                <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                    API value received vs subscription cost this month
+                </div>
+            </div>
+        </section>
+
+        <section>
             <h2>Active Agents</h2>
             <div class="agents-grid" id="agentsGrid">
                 <div class="no-agents">Loading agents...</div>
@@ -1418,6 +1461,59 @@
             } catch (error) {
                 console.error('Failed to load progress data:', error);
                 document.getElementById('lastUpdated').textContent = 'Error loading data';
+            }
+        }
+
+        async function loadCosts() {
+            try {
+                const response = await fetch('costs.json');
+                const data = await response.json();
+                renderCosts(data);
+            } catch (error) {
+                console.warn('Failed to load cost data:', error);
+            }
+        }
+
+        function renderCosts(data) {
+            const MAX_SUBSCRIPTION = 200; // $200/month MAX plan
+
+            // Get today's data (first entry is most recent)
+            const today = data.daily && data.daily[0];
+            const monthly = data.monthly && data.monthly.totals;
+
+            if (today) {
+                // Today's equivalent API cost
+                const todayCost = today.totalCost || 0;
+                document.getElementById('todayCost').textContent = '$' + todayCost.toFixed(2);
+
+                // New tokens (input + output only, not cache)
+                const newTokens = (today.inputTokens || 0) + (today.outputTokens || 0);
+                const formattedTokens = newTokens > 1000000
+                    ? (newTokens / 1000000).toFixed(1) + 'M'
+                    : newTokens > 1000
+                        ? (newTokens / 1000).toFixed(0) + 'K'
+                        : newTokens.toString();
+                document.getElementById('todayTokens').textContent = formattedTokens;
+
+                // Cache efficiency
+                const totalTokens = today.totalTokens || 1;
+                const cacheTokens = (today.cacheCreationTokens || 0) + (today.cacheReadTokens || 0);
+                const cacheRate = Math.round((cacheTokens / totalTokens) * 100);
+                document.getElementById('cacheEfficiency').textContent = cacheRate + '%';
+            }
+
+            if (monthly) {
+                // Monthly equivalent API cost
+                const monthlyCost = monthly.totalCost || 0;
+                document.getElementById('monthlyCost').textContent = '$' + monthlyCost.toFixed(0);
+
+                // Value ratio (how much API value vs subscription cost)
+                const valueRatio = monthlyCost / MAX_SUBSCRIPTION;
+                document.getElementById('maxValueRatio').textContent = valueRatio.toFixed(1) + 'x';
+
+                // Progress bar (cap at 100% for display, but show actual ratio in text)
+                const barWidth = Math.min(valueRatio * 10, 100); // 10x = 100% bar
+                document.getElementById('maxValueBar').style.width = barWidth + '%';
             }
         }
 
@@ -2281,13 +2377,15 @@
         loadProgress();
         loadBlogPosts();
         loadAgents();
+        loadCosts();
         startAutoRefresh();
 
         function startAutoRefresh() {
             refreshIntervals = [
                 setInterval(loadProgress, 30000),
                 setInterval(loadBlogPosts, 60000),
-                setInterval(loadAgents, 15000)
+                setInterval(loadAgents, 15000),
+                setInterval(loadCosts, 300000) // Refresh costs every 5 minutes
             ];
         }
 
@@ -2304,6 +2402,7 @@
             loadProgress();
             loadBlogPosts();
             loadAgents();
+            loadCosts();
             showToast('Data refreshed');
         }
 
