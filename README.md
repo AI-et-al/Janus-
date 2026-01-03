@@ -5,7 +5,7 @@
 # JANUS
 
 <p align="center">
-  <img src="janus-ascii-animated.gif" alt="Janus ASCII" width="100%">
+  <img src="symposium-animated.gif" alt="Janus ASCII" width="100%">
 </p>
 
 ---
