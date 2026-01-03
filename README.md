@@ -5,7 +5,7 @@
 # JANUS
 
 <p align="center">
-  <img src="symposium-animated.gif" alt="Janus ASCII" width="100%">
+  <img src="https://janus-assets.us-lax-1.linodeobjects.com/symposium-animated.gif" alt="Janus ASCII" width="100%">
 </p>
 
 ---
