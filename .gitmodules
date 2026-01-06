@@ -1,0 +1,3 @@
+[submodule "vendor/agent-scripts"]
+	path = vendor/agent-scripts
+	url = https://github.com/steipete/agent-scripts.git
